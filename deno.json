@@ -1,0 +1,28 @@
+{
+  "name": "@tijs/atproto-oauth-hono",
+  "version": "0.1.0",
+  "description": "Complete ATProto OAuth integration for Hono applications on Val.Town",
+  "license": "MIT",
+  "exports": "./mod.ts",
+  "compilerOptions": {
+    "strict": true,
+    "noImplicitAny": false,
+    "lib": ["dom", "dom.iterable", "deno.ns"]
+  },
+  "lint": {
+    "rules": {
+      "exclude": [
+        "no-explicit-any"
+      ]
+    }
+  },
+  "tasks": {
+    "test": "deno test --allow-all",
+    "quality": "deno fmt && deno lint && deno test --allow-all"
+  },
+  "imports": {
+    "@hono/hono": "jsr:@hono/hono@4.9.6",
+    "@tijs/oauth-client-deno": "jsr:@tijs/oauth-client-deno",
+    "@tijs/hono-oauth-sessions": "jsr:@tijs/hono-oauth-sessions"
+  }
+}
