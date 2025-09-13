@@ -6,6 +6,72 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2025-01-13
+
+### Changed
+
+- **BREAKING**: Redesigned storage to be pluggable with standard `OAuthStorage`
+  interface
+- Removed drizzle-orm as a hard dependency from main package
+- Updated all storage implementations to use consistent `get()`, `set()`,
+  `delete()` methods
+- DrizzleStorage and ironSessionStorageTable now exported from separate
+  `/drizzle` module
+- Factory function now accepts `storage` parameter instead of `database`
+
+### Added
+
+- `MemoryStorage` class for development and testing (now the default)
+- `SQLiteStorage` class for raw SQLite databases (e.g., Val.Town)
+- Separate `jsr:@tijs/atproto-oauth-hono/drizzle` export for Drizzle ORM users
+- `OAuthStorage` interface export for custom storage implementations
+- Comprehensive storage documentation with usage examples
+
+### Improved
+
+- Main package has zero external database dependencies
+- Drizzle ORM only downloaded when explicitly imported from `/drizzle` module
+- Better separation of concerns between storage implementations
+- More flexible architecture for different deployment environments
+
+### Migration Guide
+
+**Before (v0.1.0):**
+
+```typescript
+const oauth = createATProtoOAuth({
+  baseUrl: "https://myapp.val.town",
+  appName: "My App",
+  // Used hardcoded Drizzle storage
+});
+```
+
+**After (v0.2.0):**
+
+```typescript
+// Option 1: Use default MemoryStorage (development)
+const oauth = createATProtoOAuth({
+  baseUrl: "https://myapp.val.town",
+  appName: "My App",
+});
+
+// Option 2: Use SQLiteStorage (Val.Town)
+import { SQLiteStorage } from "jsr:@tijs/atproto-oauth-hono";
+const storage = new SQLiteStorage(sqlite);
+const oauth = createATProtoOAuth({
+  /* config */,
+  storage
+});
+
+// Option 3: Use DrizzleStorage (requires separate import)
+import { DrizzleStorage } from "jsr:@tijs/atproto-oauth-hono/drizzle";
+const storage = new DrizzleStorage(db);
+const oauth = createATProtoOAuth({
+  /* config */,
+  storage
+});
+```
+
 ## [0.1.0] - 2025-01-13
 
 ### Added

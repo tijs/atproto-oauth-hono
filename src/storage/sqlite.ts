@@ -1,29 +1,31 @@
 /**
- * Val.Town SQLite storage implementation for OAuth sessions
- * Adapted from location-feed-generator/backend/oauth/iron-storage.ts
+ * Raw SQLite storage implementation for OAuth sessions
+ * Works with Val.Town sqlite or any raw SQLite interface
  */
 
 import type { OAuthStorage } from "./interface.ts";
 
-// Note: These imports work on Val.Town but will need to be mocked for testing
-declare const sqlite: {
+// SQLite interface - compatible with Val.Town sqlite
+export interface SQLiteDatabase {
   execute(
     query: { sql: string; args: any[] },
   ): Promise<{ columns: string[]; rows: any[][] }>;
-};
+}
 
 /**
- * Val.Town SQLite storage for OAuth sessions and tokens
+ * Raw SQLite storage for OAuth sessions and tokens
  */
-export class ValTownStorage implements OAuthStorage {
+export class SQLiteStorage implements OAuthStorage {
   private initialized = false;
   private tableName = "iron_session_storage";
+
+  constructor(private db: SQLiteDatabase) {}
 
   private async init() {
     if (this.initialized) return;
 
     // Create table if it doesn't exist
-    await sqlite.execute({
+    await this.db.execute({
       sql: `
         CREATE TABLE IF NOT EXISTS ${this.tableName} (
           key TEXT PRIMARY KEY,
@@ -37,7 +39,7 @@ export class ValTownStorage implements OAuthStorage {
     });
 
     // Create index on expires_at for efficient cleanup
-    await sqlite.execute({
+    await this.db.execute({
       sql:
         `CREATE INDEX IF NOT EXISTS idx_${this.tableName}_expires_at ON ${this.tableName}(expires_at)`,
       args: [],
@@ -46,27 +48,11 @@ export class ValTownStorage implements OAuthStorage {
     this.initialized = true;
   }
 
-  async hasItem(key: string): Promise<boolean> {
+  async get<T = unknown>(key: string): Promise<T | null> {
     await this.init();
 
     const now = Date.now();
-    const result = await sqlite.execute({
-      sql: `
-        SELECT key FROM ${this.tableName}
-        WHERE key = ? AND (expires_at IS NULL OR expires_at > ?)
-        LIMIT 1
-      `,
-      args: [key, now],
-    });
-
-    return result.rows.length > 0;
-  }
-
-  async getItem<T = any>(key: string): Promise<T | null> {
-    await this.init();
-
-    const now = Date.now();
-    const result = await sqlite.execute({
+    const result = await this.db.execute({
       sql: `
         SELECT value FROM ${this.tableName}
         WHERE key = ? AND (expires_at IS NULL OR expires_at > ?)
@@ -87,9 +73,9 @@ export class ValTownStorage implements OAuthStorage {
     }
   }
 
-  async setItem(
+  async set<T = unknown>(
     key: string,
-    value: any,
+    value: T,
     options?: { ttl?: number },
   ): Promise<void> {
     await this.init();
@@ -100,7 +86,7 @@ export class ValTownStorage implements OAuthStorage {
       ? value
       : JSON.stringify(value);
 
-    await sqlite.execute({
+    await this.db.execute({
       sql: `
         INSERT INTO ${this.tableName} (key, value, expires_at, created_at, updated_at)
         VALUES (?, ?, ?, ?, ?)
@@ -113,60 +99,12 @@ export class ValTownStorage implements OAuthStorage {
     });
   }
 
-  async removeItem(key: string): Promise<void> {
+  async delete(key: string): Promise<void> {
     await this.init();
 
-    await sqlite.execute({
+    await this.db.execute({
       sql: `DELETE FROM ${this.tableName} WHERE key = ?`,
       args: [key],
     });
   }
-
-  async getKeys(): Promise<string[]> {
-    await this.init();
-
-    const now = Date.now();
-    const result = await sqlite.execute({
-      sql: `
-        SELECT key FROM ${this.tableName}
-        WHERE expires_at IS NULL OR expires_at > ?
-      `,
-      args: [now],
-    });
-
-    return result.rows.map((row) => row[0]);
-  }
-
-  async clear(): Promise<void> {
-    await this.init();
-
-    await sqlite.execute({
-      sql: `DELETE FROM ${this.tableName}`,
-      args: [],
-    });
-  }
-
-  async cleanup(): Promise<void> {
-    await this.init();
-
-    const now = Date.now();
-    await sqlite.execute({
-      sql: `
-        DELETE FROM ${this.tableName}
-        WHERE expires_at IS NOT NULL AND expires_at <= ?
-      `,
-      args: [now],
-    });
-  }
-
-  // Aliases for OAuth client compatibility
-  get = this.getItem;
-  set = this.setItem;
-  del = this.removeItem;
-  delete = this.removeItem;
 }
-
-/**
- * Default Val.Town storage instance
- */
-export const defaultValTownStorage = new ValTownStorage();

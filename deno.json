@@ -1,9 +1,12 @@
 {
   "name": "@tijs/atproto-oauth-hono",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Complete ATProto OAuth integration for Hono applications on Val.Town",
   "license": "MIT",
-  "exports": "./mod.ts",
+  "exports": {
+    ".": "./mod.ts",
+    "./drizzle": "./drizzle.ts"
+  },
   "compilerOptions": {
     "strict": true,
     "noImplicitAny": false,

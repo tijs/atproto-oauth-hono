@@ -6,6 +6,7 @@ Deno.test("createATProtoOAuth - basic configuration", () => {
   const config: ATProtoOAuthConfig = {
     baseUrl: "https://myapp.val.town",
     appName: "Test App",
+    cookieSecret: "test-secret-for-testing-only",
   };
 
   const oauth = createATProtoOAuth(config);
@@ -26,6 +27,7 @@ Deno.test("createATProtoOAuth - with mobile scheme", () => {
     baseUrl: "https://myapp.val.town",
     appName: "Test App",
     mobileScheme: "myapp://auth-callback",
+    cookieSecret: "test-secret-for-testing-only",
   };
 
   const oauth = createATProtoOAuth(config);
@@ -38,6 +40,7 @@ Deno.test("createATProtoOAuth - normalizes baseUrl", () => {
   const config: ATProtoOAuthConfig = {
     baseUrl: "https://myapp.val.town/",
     appName: "Test App",
+    cookieSecret: "test-secret-for-testing-only",
   };
 
   const oauth = createATProtoOAuth(config);

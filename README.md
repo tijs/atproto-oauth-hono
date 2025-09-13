@@ -1,8 +1,7 @@
 # @tijs/atproto-oauth-hono
 
-Complete ATProto OAuth integration for Hono applications on Val.Town. Get
-plug-and-play ATProto authentication with web and mobile support in just a few
-lines of code.
+Complete ATProto OAuth integration for Hono applications. Get plug-and-play
+ATProto authentication with web and mobile support in just a few lines of code.
 
 ## Features
 
@@ -10,7 +9,7 @@ lines of code.
 - 📱 **Mobile ready** - Built-in mobile app WebView support with configurable
   URL schemes
 - 🔄 **Session management** - Automatic token refresh and validation
-- 🗄️ **Val.Town optimized** - Uses Val.Town SQLite for session storage
+- 🔧 **Flexible storage** - Pluggable storage (Memory, SQLite, Drizzle ORM)
 - 🛡️ **Production tested** - Battle-tested in the Anchor app
 
 ## Quick Start
@@ -52,6 +51,7 @@ interface ATProtoOAuthConfig {
   policyUri?: string; // Privacy policy URL
   cookieSecret?: string; // Cookie signing secret (uses env COOKIE_SECRET)
   scope?: string; // OAuth scope (default: "atproto transition:generic")
+  storage?: OAuthStorage; // Custom storage implementation (defaults to MemoryStorage)
 }
 ```
 
@@ -75,6 +75,85 @@ When you mount the OAuth routes, your app automatically gets:
 
 - `POST /api/auth/mobile-start` - Start mobile OAuth flow
 - `GET /mobile/refresh-token` - Refresh mobile tokens
+
+## Storage Options
+
+Choose the storage implementation that fits your needs:
+
+### Memory Storage (Default)
+
+Perfect for testing and development:
+
+```typescript
+// No configuration needed - uses MemoryStorage by default
+const oauth = createATProtoOAuth({
+  baseUrl: "https://myapp.val.town",
+  appName: "My App",
+});
+```
+
+### SQLite Storage
+
+For raw SQLite databases (like Val.Town):
+
+```typescript
+import {
+  createATProtoOAuth,
+  SQLiteStorage,
+} from "jsr:@tijs/atproto-oauth-hono";
+
+const storage = new SQLiteStorage(sqlite); // Your SQLite instance
+const oauth = createATProtoOAuth({
+  baseUrl: "https://myapp.val.town",
+  appName: "My App",
+  storage,
+});
+```
+
+### Drizzle ORM Storage
+
+For apps using Drizzle ORM:
+
+```typescript
+import { createATProtoOAuth } from "jsr:@tijs/atproto-oauth-hono";
+import {
+  DrizzleStorage,
+  ironSessionStorageTable,
+} from "jsr:@tijs/atproto-oauth-hono/drizzle";
+import { drizzle } from "https://esm.sh/drizzle-orm@0.33.0/better-sqlite3";
+
+const db = drizzle(sqlite);
+const storage = new DrizzleStorage(db);
+const oauth = createATProtoOAuth({
+  baseUrl: "https://myapp.val.town",
+  appName: "My App",
+  storage,
+});
+
+// Use ironSessionStorageTable in your migrations
+// migrate(db, { migrationsFolder: "./migrations" });
+```
+
+**Note**: Drizzle-specific exports are in a separate `/drizzle` module to keep
+the main package lightweight.
+
+### Custom Storage
+
+Implement your own storage by following the `OAuthStorage` interface:
+
+```typescript
+import type { OAuthStorage } from "jsr:@tijs/atproto-oauth-hono";
+
+class MyCustomStorage implements OAuthStorage {
+  async get<T>(key: string): Promise<T | null> {/* your implementation */}
+  async set<T>(
+    key: string,
+    value: T,
+    options?: { ttl?: number },
+  ): Promise<void> {/* your implementation */}
+  async delete(key: string): Promise<void> {/* your implementation */}
+}
+```
 
 ## Examples
 

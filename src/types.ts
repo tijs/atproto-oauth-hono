@@ -1,4 +1,5 @@
 import type { Hono } from "@hono/hono";
+import type { OAuthStorage } from "./storage/interface.ts";
 
 /**
  * Configuration for ATProto OAuth integration
@@ -24,6 +25,9 @@ export interface ATProtoOAuthConfig {
 
   /** OAuth scope (default: "atproto transition:generic") */
   scope?: string;
+
+  /** Storage implementation for OAuth sessions (optional) */
+  storage?: OAuthStorage;
 }
 
 /**
@@ -88,4 +92,7 @@ export interface ATProtoOAuthInstance {
 
   /** Generate client metadata */
   getClientMetadata: () => ClientMetadata;
+
+  /** Direct access to sessions instance for advanced usage */
+  sessions: any; // HonoOAuthSessions instance
 }

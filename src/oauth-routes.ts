@@ -24,6 +24,7 @@ export function createOAuthRoutes(
 ): {
   routes: Hono;
   validateSession: (request: Request) => Promise<SessionValidationResult>;
+  sessions: any;
 } {
   const app = new Hono();
   const baseUrl = config.baseUrl.replace(/\/$/, "");
@@ -267,5 +268,5 @@ export function createOAuthRoutes(
     }
   };
 
-  return { routes: app, validateSession };
+  return { routes: app, validateSession, sessions };
 }

@@ -4,43 +4,21 @@
  */
 export interface OAuthStorage {
   /**
-   * Check if a key exists in storage
+   * Retrieve a value from storage
    */
-  hasItem(key: string): Promise<boolean>;
+  get<T = unknown>(key: string): Promise<T | null>;
 
   /**
-   * Get an item from storage
+   * Store a value in storage with optional TTL
    */
-  getItem<T = any>(key: string): Promise<T | null>;
+  set<T = unknown>(
+    key: string,
+    value: T,
+    options?: { ttl?: number },
+  ): Promise<void>;
 
   /**
-   * Store an item with optional TTL
+   * Delete a value from storage
    */
-  setItem(key: string, value: any, options?: { ttl?: number }): Promise<void>;
-
-  /**
-   * Remove an item from storage
-   */
-  removeItem(key: string): Promise<void>;
-
-  /**
-   * Get all keys in storage
-   */
-  getKeys(): Promise<string[]>;
-
-  /**
-   * Clear all items from storage
-   */
-  clear(): Promise<void>;
-
-  /**
-   * Clean up expired entries
-   */
-  cleanup?(): Promise<void>;
-
-  // Aliases for OAuth client compatibility
-  get: <T = any>(key: string) => Promise<T | null>;
-  set: (key: string, value: any, options?: { ttl?: number }) => Promise<void>;
-  del: (key: string) => Promise<void>;
-  delete: (key: string) => Promise<void>;
+  delete(key: string): Promise<void>;
 }

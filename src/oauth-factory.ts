@@ -4,7 +4,7 @@
 
 import type { ATProtoOAuthConfig, ATProtoOAuthInstance } from "./types.ts";
 import { createOAuthRoutes } from "./oauth-routes.ts";
-import { defaultValTownStorage } from "./storage/valtown.ts";
+import { MemoryStorage } from "./storage/memory.ts";
 import { generateClientMetadata } from "./client-metadata.ts";
 
 /**
@@ -30,15 +30,19 @@ export function createATProtoOAuth(
     baseUrl: config.baseUrl.replace(/\/$/, ""),
   };
 
-  // Create OAuth routes with default Val.Town storage
-  const { routes, validateSession } = createOAuthRoutes(
+  // Use provided storage or fallback to memory storage (for testing/development)
+  const storage = config.storage || new MemoryStorage();
+
+  // Create OAuth routes with storage
+  const { routes, validateSession, sessions } = createOAuthRoutes(
     normalizedConfig,
-    defaultValTownStorage,
+    storage,
   );
 
   return {
     routes,
     validateSession,
     getClientMetadata: () => generateClientMetadata(normalizedConfig),
+    sessions,
   };
 }
