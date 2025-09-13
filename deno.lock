@@ -6,8 +6,8 @@
     "jsr:@panva/jose@^6.1.0": "6.1.0",
     "jsr:@std/assert@1": "1.0.14",
     "jsr:@std/internal@^1.0.10": "1.0.10",
-    "jsr:@tijs/hono-oauth-sessions@*": "0.2.3",
-    "jsr:@tijs/oauth-client-deno@*": "1.0.5",
+    "jsr:@tijs/hono-oauth-sessions@0.2.3": "0.2.3",
+    "jsr:@tijs/oauth-client-deno@1.0.5": "1.0.5",
     "npm:@atproto/syntax@0.4.0": "0.4.0",
     "npm:iron-session@8.0.4": "8.0.4"
   },
@@ -103,8 +103,8 @@
     "dependencies": [
       "jsr:@hono/hono@4.9.6",
       "jsr:@std/assert@1",
-      "jsr:@tijs/hono-oauth-sessions@*",
-      "jsr:@tijs/oauth-client-deno@*"
+      "jsr:@tijs/hono-oauth-sessions@0.2.3",
+      "jsr:@tijs/oauth-client-deno@1.0.5"
     ]
   }
 }
