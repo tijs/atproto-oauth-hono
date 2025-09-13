@@ -29,4 +29,4 @@ jobs:
         run: deno test --allow-all
 
       - name: Publish package
-        run: npx jsr publish
+        run: deno publish
