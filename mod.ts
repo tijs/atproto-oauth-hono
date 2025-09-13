@@ -1,11 +1,26 @@
 /**
- * @fileoverview Complete ATProto OAuth integration for Hono applications
+ * Complete ATProto OAuth integration for Hono applications.
  *
  * Provides plug-and-play ATProto OAuth authentication with:
  * - Web and mobile OAuth flows
  * - Session management with automatic token refresh
  * - Pluggable storage (Memory, SQLite included; Drizzle via separate import)
  * - Configurable client metadata
+ *
+ * @example Basic usage
+ * ```typescript
+ * import { createATProtoOAuth } from "jsr:@tijs/atproto-oauth-hono";
+ *
+ * const oauth = createATProtoOAuth({
+ *   baseUrl: "https://myapp.val.town",
+ *   appName: "My App",
+ *   cookieSecret: "my-secret",
+ * });
+ *
+ * app.route("/", oauth.routes);
+ * ```
+ *
+ * @module
  */
 
 export { createATProtoOAuth } from "./src/oauth-factory.ts";
