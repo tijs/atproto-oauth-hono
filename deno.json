@@ -16,12 +16,17 @@
     "rules": {
       "exclude": [
         "no-explicit-any"
+      ],
+      "include": [
+        "no-slow-types"
       ]
     }
   },
   "tasks": {
     "test": "deno test --allow-all",
-    "quality": "deno fmt && deno lint && deno test --allow-all"
+    "fmt-check": "deno fmt --check",
+    "quality": "deno fmt && deno lint && deno test --allow-all",
+    "ci": "deno fmt --check && deno lint && deno test --allow-all"
   },
   "imports": {
     "@hono/hono": "jsr:@hono/hono@4.9.6",
