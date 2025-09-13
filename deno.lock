@@ -4,6 +4,8 @@
     "jsr:@hono/hono@4.9.6": "4.9.6",
     "jsr:@hono/hono@^4.9.6": "4.9.6",
     "jsr:@panva/jose@^6.1.0": "6.1.0",
+    "jsr:@std/assert@1": "1.0.14",
+    "jsr:@std/internal@^1.0.10": "1.0.10",
     "jsr:@tijs/hono-oauth-sessions@*": "0.2.3",
     "jsr:@tijs/oauth-client-deno@*": "1.0.5",
     "npm:@atproto/syntax@0.4.0": "0.4.0",
@@ -15,6 +17,15 @@
     },
     "@panva/jose@6.1.0": {
       "integrity": "9ecffef33d822f4326341ace652bf30eef30d4dc9f7134faf7901e5480c2e761"
+    },
+    "@std/assert@1.0.14": {
+      "integrity": "68d0d4a43b365abc927f45a9b85c639ea18a9fab96ad92281e493e4ed84abaa4",
+      "dependencies": [
+        "jsr:@std/internal"
+      ]
+    },
+    "@std/internal@1.0.10": {
+      "integrity": "e3be62ce42cab0e177c27698e5d9800122f67b766a0bea6ca4867886cbde8cf7"
     },
     "@tijs/hono-oauth-sessions@0.2.3": {
       "integrity": "ba0b961660a7df97c21af8f4c35b85b5e964248f3ef13884e76824cecadb98be",
@@ -91,6 +102,7 @@
   "workspace": {
     "dependencies": [
       "jsr:@hono/hono@4.9.6",
+      "jsr:@std/assert@1",
       "jsr:@tijs/hono-oauth-sessions@*",
       "jsr:@tijs/oauth-client-deno@*"
     ]

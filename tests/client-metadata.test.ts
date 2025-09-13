@@ -1,4 +1,4 @@
-import { assertEquals } from "https://deno.land/std@0.208.0/assert/mod.ts";
+import { assertEquals } from "@std/assert";
 import { generateClientMetadata } from "../src/client-metadata.ts";
 import type { ATProtoOAuthConfig } from "../src/types.ts";
 
