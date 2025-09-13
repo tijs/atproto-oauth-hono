@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1] - 2025-01-13
+
+### Fixed
+
+- JSR linting compatibility by using bare specifiers in import maps instead of
+  inline URLs
+- Added `no-slow-types` rule for better JSR compatibility
+- Added `ci` and `fmt-check` tasks for local JSR-style validation
+
 ## [0.2.0] - 2025-01-13
 
 ### Changed
