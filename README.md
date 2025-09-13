@@ -51,6 +51,7 @@ interface ATProtoOAuthConfig {
   policyUri?: string; // Privacy policy URL
   cookieSecret?: string; // Cookie signing secret (uses env COOKIE_SECRET)
   scope?: string; // OAuth scope (default: "atproto transition:generic")
+  sessionTtl?: number; // Session TTL in seconds (default: 7 days). For mobile apps, consider 30+ days
   storage?: OAuthStorage; // Custom storage implementation (defaults to MemoryStorage)
 }
 ```
@@ -154,6 +155,36 @@ class MyCustomStorage implements OAuthStorage {
   async delete(key: string): Promise<void> {/* your implementation */}
 }
 ```
+
+## Session Configuration
+
+Configure session duration for different use cases:
+
+```typescript
+// Short sessions for high-security apps (1 hour)
+const oauth = createATProtoOAuth({
+  baseUrl: "https://myapp.val.town",
+  appName: "High Security App",
+  sessionTtl: 60 * 60, // 1 hour
+});
+
+// Standard sessions (default: 7 days)
+const oauth = createATProtoOAuth({
+  baseUrl: "https://myapp.val.town",
+  appName: "My App",
+  // sessionTtl: 60 * 60 * 24 * 7, // 7 days (default)
+});
+
+// Extended sessions for mobile apps (30 days)
+const oauth = createATProtoOAuth({
+  baseUrl: "https://myapp.val.town",
+  appName: "My Mobile App",
+  sessionTtl: 60 * 60 * 24 * 30, // 30 days - good for mobile
+});
+```
+
+> **Mobile App Recommendation**: Use 30+ day sessions for mobile apps to avoid
+> frequent re-authentication in WebView scenarios.
 
 ## Examples
 

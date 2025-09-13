@@ -74,3 +74,16 @@ Deno.test("createATProtoOAuth - throws on missing appName", () => {
     "appName is required",
   );
 });
+
+Deno.test("createATProtoOAuth - configures sessionTtl", () => {
+  const oauth = createATProtoOAuth({
+    baseUrl: "https://example.com",
+    appName: "Test App",
+    sessionTtl: 60 * 60 * 24 * 30, // 30 days
+  });
+
+  // Verify the oauth instance was created successfully
+  assertEquals(typeof oauth.routes, "object");
+  assertEquals(typeof oauth.validateSession, "function");
+  assertEquals(typeof oauth.sessions, "object");
+});

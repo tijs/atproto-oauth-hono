@@ -26,6 +26,9 @@ export interface ATProtoOAuthConfig {
   /** OAuth scope (default: "atproto transition:generic") */
   scope?: string;
 
+  /** Session TTL in seconds (default: 7 days). For mobile apps, consider 30+ days */
+  sessionTtl?: number;
+
   /** Storage implementation for OAuth sessions (optional) */
   storage?: OAuthStorage;
 }
