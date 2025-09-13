@@ -7,7 +7,7 @@
  * @example
  * ```typescript
  * import { DrizzleStorage, ironSessionStorageTable } from "jsr:@tijs/atproto-oauth-hono/drizzle";
- * import { drizzle } from "https://esm.sh/drizzle-orm@0.33.0/better-sqlite3";
+ * import { drizzle } from "npm:drizzle-orm@0.33.0/better-sqlite3";
  *
  * const db = drizzle(sqlite);
  * const storage = new DrizzleStorage(db);
