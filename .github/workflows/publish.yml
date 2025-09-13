@@ -1,4 +1,4 @@
-name: Publish to JSR
+name: Publish
 
 on:
   push:
@@ -8,14 +8,11 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-
     permissions:
       contents: read
-      id-token: write # Required for provenance generation
-
+      id-token: write
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Setup Deno
         uses: denoland/setup-deno@v1
@@ -31,5 +28,5 @@ jobs:
       - name: Run tests
         run: deno test --allow-all
 
-      - name: Publish to JSR
-        run: deno publish
+      - name: Publish package
+        run: npx jsr publish
