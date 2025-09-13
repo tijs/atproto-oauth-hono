@@ -10,7 +10,8 @@ and this project adheres to
 
 ### Fixed
 
-- Added proper module documentation with `@module` tag for all entrypoints to satisfy JSR requirements
+- Added proper module documentation with `@module` tag for all entrypoints to
+  satisfy JSR requirements
 
 ## [0.2.1] - 2025-01-13
 
