@@ -5,7 +5,7 @@
 
 import type { OAuthStorage } from "./interface.ts";
 import { ironSessionStorageTable } from "./schema.ts";
-import { and, eq, gt, isNull, or } from "https://esm.sh/drizzle-orm@0.33.0";
+import { and, eq, gt, isNull, or } from "drizzle-orm";
 
 // Database interface - compatible with Drizzle database instances
 export interface DrizzleDatabase {

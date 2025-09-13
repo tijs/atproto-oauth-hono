@@ -3,11 +3,7 @@
  * Matches location-feed-generator schema structure
  */
 
-import {
-  integer,
-  sqliteTable,
-  text,
-} from "https://esm.sh/drizzle-orm@0.33.0/sqlite-core";
+import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const ironSessionStorageTable: any = sqliteTable(
   "iron_session_storage",

@@ -12,7 +12,7 @@ and this project adheres to
 
 - **BREAKING**: Redesigned storage to be pluggable with standard `OAuthStorage`
   interface
-- Removed drizzle-orm as a hard dependency from main package
+- Made drizzle-orm optional by moving it to separate `/drizzle` export module
 - Updated all storage implementations to use consistent `get()`, `set()`,
   `delete()` methods
 - DrizzleStorage and ironSessionStorageTable now exported from separate
@@ -29,8 +29,8 @@ and this project adheres to
 
 ### Improved
 
-- Main package has zero external database dependencies
-- Drizzle ORM only downloaded when explicitly imported from `/drizzle` module
+- Main package functionality doesn't require drizzle-orm imports
+- Drizzle ORM only used when explicitly importing from `/drizzle` module
 - Better separation of concerns between storage implementations
 - More flexible architecture for different deployment environments
 
