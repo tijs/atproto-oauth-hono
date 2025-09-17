@@ -10,8 +10,10 @@ and this project adheres to
 
 ### Fixed
 
-- **Complete Type Coverage**: Updated to `@tijs/hono-oauth-sessions@0.3.1` with complete `OAuthSessionsInterface` including all public methods
-- **Test Compatibility**: All session method tests now pass with proper type checking
+- **Complete Type Coverage**: Updated to `@tijs/hono-oauth-sessions@0.3.1` with
+  complete `OAuthSessionsInterface` including all public methods
+- **Test Compatibility**: All session method tests now pass with proper type
+  checking
 
 ## [0.2.4] - 2025-09-17
 
