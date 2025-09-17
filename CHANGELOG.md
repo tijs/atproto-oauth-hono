@@ -10,7 +10,8 @@ and this project adheres to
 
 ### Added
 
-- **Type Re-exports**: Added `OAuthSessionsInterface` re-export from `hono-oauth-sessions` for convenience and proper dependency management
+- **Type Re-exports**: Added `OAuthSessionsInterface` re-export from
+  `hono-oauth-sessions` for convenience and proper dependency management
 
 ## [0.2.5] - 2025-09-17
 
