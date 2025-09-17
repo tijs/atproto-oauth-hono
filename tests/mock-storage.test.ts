@@ -100,15 +100,15 @@ Deno.test("MockStorage - basic operations", async () => {
 Deno.test("MockStorage - TTL expiration", async () => {
   const storage = new MockStorage();
 
-  // Set item with 1 second TTL
-  await storage.setItem("expiring", "value", { ttl: 0.001 }); // 1ms
+  // Set item with 0.05 second TTL (50ms)
+  await storage.setItem("expiring", "value", { ttl: 0.05 });
 
   // Should exist immediately
   assertEquals(await storage.hasItem("expiring"), true);
   assertEquals(await storage.getItem("expiring"), "value");
 
-  // Wait for expiration
-  await new Promise((resolve) => setTimeout(resolve, 10));
+  // Wait for expiration (100ms to be safe)
+  await new Promise((resolve) => setTimeout(resolve, 100));
 
   // Should be expired
   assertEquals(await storage.hasItem("expiring"), false);
