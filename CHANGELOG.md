@@ -10,12 +10,15 @@ and this project adheres to
 
 ### Added
 
-- **Enhanced Type Safety**: Updated `sessions` property type from `any` to `OAuthSessionsInterface` for better TypeScript support
-- **Dependency Updates**: Updated to `@tijs/oauth-client-deno@2.0.0` and `@tijs/hono-oauth-sessions@0.3.0`
+- **Enhanced Type Safety**: Updated `sessions` property type from `any` to
+  `OAuthSessionsInterface` for better TypeScript support
+- **Dependency Updates**: Updated to `@tijs/oauth-client-deno@2.0.0` and
+  `@tijs/hono-oauth-sessions@0.3.0`
 
 ### Fixed
 
-- **Type Safety**: Improved IntelliSense and compile-time type checking for OAuth session operations
+- **Type Safety**: Improved IntelliSense and compile-time type checking for
+  OAuth session operations
 
 ## [0.2.3] - 2025-01-13
 
