@@ -30,6 +30,9 @@ export type {
   ClientMetadata,
 } from "./src/types.ts";
 
+// Re-export OAuth sessions interface from hono-oauth-sessions for convenience
+export type { OAuthSessionsInterface } from "@tijs/hono-oauth-sessions";
+
 // Core storage implementations (no external dependencies)
 export { MemoryStorage } from "./src/storage/memory.ts";
 export { SQLiteStorage } from "./src/storage/sqlite.ts";
