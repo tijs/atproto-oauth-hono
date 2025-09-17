@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.5] - 2025-09-17
+
+### Fixed
+
+- **Complete Type Coverage**: Updated to `@tijs/hono-oauth-sessions@0.3.1` with complete `OAuthSessionsInterface` including all public methods
+- **Test Compatibility**: All session method tests now pass with proper type checking
+
 ## [0.2.4] - 2025-09-17
 
 ### Added
