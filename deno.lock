@@ -7,6 +7,7 @@
     "jsr:@std/assert@1": "1.0.14",
     "jsr:@std/internal@^1.0.10": "1.0.10",
     "jsr:@tijs/hono-oauth-sessions@0.2.3": "0.2.3",
+    "jsr:@tijs/hono-oauth-sessions@0.3": "0.3.0",
     "jsr:@tijs/oauth-client-deno@1.0.5": "1.0.5",
     "npm:@atproto/syntax@0.4.0": "0.4.0",
     "npm:drizzle-orm@0.33.0": "0.33.0",
@@ -30,6 +31,14 @@
     },
     "@tijs/hono-oauth-sessions@0.2.3": {
       "integrity": "ba0b961660a7df97c21af8f4c35b85b5e964248f3ef13884e76824cecadb98be",
+      "dependencies": [
+        "jsr:@hono/hono@^4.9.6",
+        "npm:@atproto/syntax",
+        "npm:iron-session"
+      ]
+    },
+    "@tijs/hono-oauth-sessions@0.3.0": {
+      "integrity": "e88c7255a1b4ad369afa187a2e157479eaa6724fadd73b6634d7afb929b8beb5",
       "dependencies": [
         "jsr:@hono/hono@^4.9.6",
         "npm:@atproto/syntax",
