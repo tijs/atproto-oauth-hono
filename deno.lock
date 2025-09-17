@@ -6,9 +6,8 @@
     "jsr:@panva/jose@^6.1.0": "6.1.0",
     "jsr:@std/assert@1": "1.0.14",
     "jsr:@std/internal@^1.0.10": "1.0.10",
-    "jsr:@tijs/hono-oauth-sessions@0.2.3": "0.2.3",
-    "jsr:@tijs/hono-oauth-sessions@0.3": "0.3.0",
-    "jsr:@tijs/oauth-client-deno@1.0.5": "1.0.5",
+    "jsr:@tijs/hono-oauth-sessions@0.3.0": "0.3.0",
+    "jsr:@tijs/oauth-client-deno@2": "2.0.0",
     "npm:@atproto/syntax@0.4.0": "0.4.0",
     "npm:drizzle-orm@0.33.0": "0.33.0",
     "npm:iron-session@8.0.4": "8.0.4"
@@ -29,14 +28,6 @@
     "@std/internal@1.0.10": {
       "integrity": "e3be62ce42cab0e177c27698e5d9800122f67b766a0bea6ca4867886cbde8cf7"
     },
-    "@tijs/hono-oauth-sessions@0.2.3": {
-      "integrity": "ba0b961660a7df97c21af8f4c35b85b5e964248f3ef13884e76824cecadb98be",
-      "dependencies": [
-        "jsr:@hono/hono@^4.9.6",
-        "npm:@atproto/syntax",
-        "npm:iron-session"
-      ]
-    },
     "@tijs/hono-oauth-sessions@0.3.0": {
       "integrity": "e88c7255a1b4ad369afa187a2e157479eaa6724fadd73b6634d7afb929b8beb5",
       "dependencies": [
@@ -45,8 +36,8 @@
         "npm:iron-session"
       ]
     },
-    "@tijs/oauth-client-deno@1.0.5": {
-      "integrity": "884ceadc537d0b00ade3c585273b59a990dda1e678da93445e4ded3661d8ae1c",
+    "@tijs/oauth-client-deno@2.0.0": {
+      "integrity": "24f582e09aa089bbaf9e1bf859c043d3a509366939097d04f6363093b65cbeb0",
       "dependencies": [
         "jsr:@panva/jose",
         "npm:@atproto/syntax"
@@ -116,8 +107,8 @@
     "dependencies": [
       "jsr:@hono/hono@4.9.6",
       "jsr:@std/assert@1",
-      "jsr:@tijs/hono-oauth-sessions@0.2.3",
-      "jsr:@tijs/oauth-client-deno@1.0.5",
+      "jsr:@tijs/hono-oauth-sessions@0.3.0",
+      "jsr:@tijs/oauth-client-deno@2",
       "npm:drizzle-orm@0.33.0"
     ]
   }

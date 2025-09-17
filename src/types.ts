@@ -1,6 +1,6 @@
 import type { Hono } from "@hono/hono";
 import type { OAuthStorage } from "./storage/interface.ts";
-import type { OAuthSessionsInterface } from "jsr:@tijs/hono-oauth-sessions@0.3.0";
+import type { OAuthSessionsInterface } from "@tijs/hono-oauth-sessions";
 
 /**
  * Configuration for ATProto OAuth integration
