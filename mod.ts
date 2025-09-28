@@ -82,8 +82,8 @@
  * });
  * ```
  *
- * For detailed setup instructions, see the documentation at:
- * https://github.com/tijs/atproto-oauth-hono/tree/main/docs
+ * For complete API documentation with examples, visit:
+ * https://jsr.io/@tijs/atproto-oauth-hono
  *
  * @module
  */
