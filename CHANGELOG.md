@@ -6,6 +6,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.7] - 2025-09-28
+
+### Added
+
+- **Comprehensive Documentation**: Added complete documentation suite focused on
+  Val.Town integration
+  - `docs/README.md`: Package overview and quick start guide
+  - `docs/valtown-integration.md`: Complete Val.Town setup walkthrough with
+    database configuration and common patterns
+  - `docs/frontend-integration.md`: React authentication patterns and
+    cookie-based auth implementation
+  - `docs/configuration.md`: All configuration options and environment setup
+  - `docs/api-reference.md`: Complete API documentation with examples
+  - `docs/troubleshooting.md`: Common issues and solutions based on real-world
+    integration experience
+- **Val.Town Compatibility Guide**: Detailed guidance on sqlite2 vs sqlite
+  usage, sessionTtl requirements, and TypeScript workarounds
+- **Authentication Patterns**: Complete examples for cookie-based auth,
+  `credentials: "include"` usage, and session management
+
 ## [0.2.6] - 2025-09-17
 
 ### Added
