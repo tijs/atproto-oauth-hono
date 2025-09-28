@@ -6,6 +6,31 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.8] - 2025-09-28
+
+### Changed
+
+- **JSDoc Documentation**: Migrated all documentation from separate markdown files
+  to comprehensive JSDoc comments for better JSR integration
+- **Enhanced Developer Experience**: Documentation now appears in JSR's docs tab
+  with proper symbol documentation and IntelliSense support
+- **Consolidated Documentation**: Single source of truth - no duplicate
+  documentation to maintain
+
+### Removed
+
+- **Markdown Documentation Files**: Removed `docs/` directory - all content
+  migrated to JSDoc comments in source code
+
+### Improved
+
+- **Module Documentation**: Enhanced module-level docs with complete Val.Town
+  examples and setup instructions
+- **Function Documentation**: Comprehensive JSDoc with multiple usage examples
+  and troubleshooting guidance
+- **Type Documentation**: Enhanced interface docs with validation notes and
+  common error prevention tips
+
 ## [0.2.7] - 2025-09-28
 
 ### Added
