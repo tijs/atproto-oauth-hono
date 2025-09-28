@@ -10,8 +10,8 @@ and this project adheres to
 
 ### Changed
 
-- **JSDoc Documentation**: Migrated all documentation from separate markdown files
-  to comprehensive JSDoc comments for better JSR integration
+- **JSDoc Documentation**: Migrated all documentation from separate markdown
+  files to comprehensive JSDoc comments for better JSR integration
 - **Enhanced Developer Experience**: Documentation now appears in JSR's docs tab
   with proper symbol documentation and IntelliSense support
 - **Consolidated Documentation**: Single source of truth - no duplicate
