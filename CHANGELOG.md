@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.9] - 2025-09-28
+
+### Fixed
+
+- **Documentation Links**: Updated JSDoc documentation link to point to JSR docs
+  instead of removed docs directory
+- **README Updates**: Updated all import examples to use latest version ^0.2.8
+- **JSR Integration**: Improved documentation experience with proper JSR links
+
 ## [0.2.8] - 2025-09-28
 
 ### Changed
