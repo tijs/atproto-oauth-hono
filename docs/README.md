@@ -1,16 +1,22 @@
 # @tijs/atproto-oauth-hono Documentation
 
-Complete AT Protocol OAuth integration for Hono applications with built-in session management and DPoP support.
+Complete AT Protocol OAuth integration for Hono applications with built-in
+session management and DPoP support.
 
 ## Table of Contents
 
-- [Val.Town Integration Guide](./valtown-integration.md) - Complete setup guide for Val.Town
-- [Configuration Reference](./configuration.md) - All available configuration options
-- [Frontend Integration](./frontend-integration.md) - How to handle authentication in your frontend
+- [Val.Town Integration Guide](./valtown-integration.md) - Complete setup guide
+  for Val.Town
+- [Configuration Reference](./configuration.md) - All available configuration
+  options
+- [Frontend Integration](./frontend-integration.md) - How to handle
+  authentication in your frontend
 - [API Reference](./api-reference.md) - Available methods and endpoints
-- [Storage Adapters](./storage-adapters.md) - Database integration with Drizzle ORM
+- [Storage Adapters](./storage-adapters.md) - Database integration with Drizzle
+  ORM
 - [Troubleshooting](./troubleshooting.md) - Common issues and solutions
-- [Migration Guide](./migration-guide.md) - Migrating from custom OAuth implementations
+- [Migration Guide](./migration-guide.md) - Migrating from custom OAuth
+  implementations
 
 ## Quick Start
 
@@ -32,8 +38,10 @@ app.route("/", oauth.routes);
 ## Platform Support
 
 This package is designed to work seamlessly with:
+
 - **Val.Town** (primary focus) - Complete integration guide available
 - **Deno Deploy** - Works with minor configuration changes
 - **Node.js** - Requires additional setup for Iron Session compatibility
 
-For Val.Town users, start with the [Val.Town Integration Guide](./valtown-integration.md).
+For Val.Town users, start with the
+[Val.Town Integration Guide](./valtown-integration.md).

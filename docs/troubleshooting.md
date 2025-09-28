@@ -34,7 +34,8 @@ const oauth = createATProtoOAuth({
 
 ### "Type instantiation is excessively deep" TypeScript Error
 
-**Error**: TypeScript compilation fails with "Type instantiation is excessively deep and possibly infinite"
+**Error**: TypeScript compilation fails with "Type instantiation is excessively
+deep and possibly infinite"
 
 **Cause**: Complex type inference in Hono route mounting.
 
@@ -57,9 +58,11 @@ try {
 
 ### "Could not find repo" Error
 
-**Error**: `{"error":"InvalidRequest","message":"Could not find repo: did:plc:..."}`
+**Error**:
+`{"error":"InvalidRequest","message":"Could not find repo: did:plc:..."}`
 
-**Cause**: Trying to fetch data from wrong PDS (e.g., `bsky.social` instead of user's actual PDS).
+**Cause**: Trying to fetch data from wrong PDS (e.g., `bsky.social` instead of
+user's actual PDS).
 
 **Solution**: Use the `oauthSession.pdsUrl` from the authenticated session:
 
@@ -67,12 +70,12 @@ try {
 // ✅ Correct - use user's actual PDS
 const response = await oauthSession.makeRequest(
   "GET",
-  `${oauthSession.pdsUrl}/xrpc/com.atproto.repo.listRecords?repo=${did}&collection=app.bsky.feed.post`
+  `${oauthSession.pdsUrl}/xrpc/com.atproto.repo.listRecords?repo=${did}&collection=app.bsky.feed.post`,
 );
 
 // ❌ Wrong - hardcoded to bsky.social
 const response = await fetch(
-  `https://bsky.social/xrpc/com.atproto.repo.listRecords?repo=${did}&collection=app.bsky.feed.post`
+  `https://bsky.social/xrpc/com.atproto.repo.listRecords?repo=${did}&collection=app.bsky.feed.post`,
 );
 ```
 
@@ -180,6 +183,7 @@ const response = await fetch("/api/data");
 **Solutions**:
 
 1. **Check cookie secret**:
+
 ```typescript
 // Ensure COOKIE_SECRET is set in Val.Town environment
 const cookieSecret = Deno.env.get("COOKIE_SECRET");
@@ -189,6 +193,7 @@ if (!cookieSecret) {
 ```
 
 2. **Verify HTTPS**:
+
 ```typescript
 // Val.Town provides HTTPS automatically, but check your baseUrl
 baseUrl: "https://myapp.val.run", // ✅ HTTPS
@@ -196,6 +201,7 @@ baseUrl: "http://myapp.val.run",  // ❌ HTTP won't work
 ```
 
 3. **Check session TTL**:
+
 ```typescript
 // Ensure reasonable session TTL
 sessionTtl: 60 * 60 * 24, // 24 hours - reasonable
@@ -214,7 +220,7 @@ sessionTtl: 60,           // 1 minute - too short
 // ✅ Correct - package handles DPoP automatically
 const response = await oauthSession.makeRequest(
   "GET",
-  `${oauthSession.pdsUrl}/xrpc/com.atproto.repo.getRecord?repo=${did}&collection=app.bsky.feed.post&rkey=${rkey}`
+  `${oauthSession.pdsUrl}/xrpc/com.atproto.repo.getRecord?repo=${did}&collection=app.bsky.feed.post&rkey=${rkey}`,
 );
 
 // ❌ Wrong - manual token handling
@@ -311,11 +317,13 @@ app.get("/api/debug/session", async (c) => {
 
     return c.json({
       authenticated: !!authResult,
-      user: authResult ? {
-        did: authResult.did,
-        hasOAuthSession: !!authResult.oauthSession,
-        pdsUrl: authResult.oauthSession?.pdsUrl,
-      } : null,
+      user: authResult
+        ? {
+          did: authResult.did,
+          hasOAuthSession: !!authResult.oauthSession,
+          pdsUrl: authResult.oauthSession?.pdsUrl,
+        }
+        : null,
     });
   } catch (error) {
     return c.json({
@@ -335,6 +343,7 @@ app.get("/api/debug/session", async (c) => {
 **Solutions**:
 
 1. **Check database performance**:
+
 ```typescript
 // Add timing to database operations
 const start = Date.now();
@@ -343,6 +352,7 @@ console.log(`Migrations took ${Date.now() - start}ms`);
 ```
 
 2. **Optimize session queries**:
+
 ```typescript
 // Ensure proper indexing in your schema
 export const ironSessionStorageTable = sqliteTable("iron_session_storage", {
@@ -361,13 +371,14 @@ export const ironSessionStorageTable = sqliteTable("iron_session_storage", {
 **Solutions**:
 
 1. **Check for session leaks**:
+
 ```typescript
 // Monitor session storage size
 app.get("/api/debug/storage", async (c) => {
   const sessionCount = await db.select().from(ironSessionStorageTable);
   return c.json({
     sessionCount: sessionCount.length,
-    oldSessions: sessionCount.filter(s =>
+    oldSessions: sessionCount.filter((s) =>
       s.expiresAt && s.expiresAt < Date.now()
     ).length,
   });
@@ -375,6 +386,7 @@ app.get("/api/debug/storage", async (c) => {
 ```
 
 2. **Clean up expired sessions**:
+
 ```typescript
 // Add cleanup job
 const cleanupExpiredSessions = async () => {
@@ -413,7 +425,7 @@ const db = drizzle(
   async (sql, params) => {
     const result = await sqlite.execute({ sql, args: params || [] });
     return { rows: result.rows };
-  }
+  },
 );
 
 // Create required table
@@ -445,4 +457,5 @@ app.route("/", oauth.routes);
 export default app.fetch;
 ```
 
-This minimal setup should work and help you identify what's causing issues in your more complex configuration.
+This minimal setup should work and help you identify what's causing issues in
+your more complex configuration.

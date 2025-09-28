@@ -1,6 +1,7 @@
 # Val.Town Integration Guide
 
-Complete guide for integrating `@tijs/atproto-oauth-hono` with Val.Town using Drizzle ORM and sqlite2.
+Complete guide for integrating `@tijs/atproto-oauth-hono` with Val.Town using
+Drizzle ORM and sqlite2.
 
 ## Prerequisites
 
@@ -38,6 +39,7 @@ COOKIE_SECRET=your-secure-random-string-here
 ```
 
 Generate a secure cookie secret:
+
 ```bash
 # Generate a secure random string
 openssl rand -base64 32
@@ -205,7 +207,7 @@ app.get("/api/example", async (c) => {
   // Make authenticated requests to user's PDS
   const response = await oauthSession.makeRequest(
     "GET",
-    `${oauthSession.pdsUrl}/xrpc/com.atproto.repo.listRecords?repo=${did}&collection=app.bsky.feed.post`
+    `${oauthSession.pdsUrl}/xrpc/com.atproto.repo.listRecords?repo=${did}&collection=app.bsky.feed.post`,
   );
 
   return c.json(await response.json());
@@ -214,7 +216,9 @@ app.get("/api/example", async (c) => {
 // Helper function for authentication
 async function getAuthenticatedUser(c: any) {
   try {
-    const { getIronSession, unsealData } = await import("npm:iron-session@8.0.4");
+    const { getIronSession, unsealData } = await import(
+      "npm:iron-session@8.0.4"
+    );
     const cookieSecret = Deno.env.get("COOKIE_SECRET");
     let userDid: string | null = null;
 
@@ -281,6 +285,7 @@ export default app.fetch;
 ## Important Notes for Val.Town
 
 ### 1. Use sqlite2, not sqlite
+
 ```typescript
 // ✅ Correct
 import { sqlite } from "https://esm.town/v/std/sqlite2";
@@ -290,6 +295,7 @@ import { sqlite } from "https://esm.town/v/stevekrouse/sqlite";
 ```
 
 ### 2. sessionTtl is Required
+
 ```typescript
 // ✅ Always include sessionTtl
 const oauth = createATProtoOAuth({
@@ -301,7 +307,9 @@ const oauth = createATProtoOAuth({
 ```
 
 ### 3. TypeScript Route Mounting
+
 The route mounting may show TypeScript errors but works at runtime:
+
 ```typescript
 // Add @ts-ignore to suppress type errors
 // @ts-ignore - Type instantiation too deep but works at runtime
@@ -309,7 +317,9 @@ app.route("/", oauth.routes);
 ```
 
 ### 4. Environment Variables
-Set your `COOKIE_SECRET` in Val.Town's environment variables section. This is crucial for session security.
+
+Set your `COOKIE_SECRET` in Val.Town's environment variables section. This is
+crucial for session security.
 
 ## What You Get
 
@@ -323,6 +333,7 @@ After setup, your app automatically provides:
 
 ## Next Steps
 
-- [Frontend Integration Guide](./frontend-integration.md) - Learn how to handle auth in your React frontend
+- [Frontend Integration Guide](./frontend-integration.md) - Learn how to handle
+  auth in your React frontend
 - [API Reference](./api-reference.md) - Explore all available methods
 - [Troubleshooting](./troubleshooting.md) - Common issues and solutions

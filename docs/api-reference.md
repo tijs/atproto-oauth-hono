@@ -15,11 +15,13 @@ const oauth = createATProtoOAuth(config);
 ```
 
 **Parameters:**
+
 - `config` (ATProtoOAuthConfig): Configuration object
 
 **Returns:** ATProtoOAuthInstance
 
 **Example:**
+
 ```typescript
 const oauth = createATProtoOAuth({
   baseUrl: "https://myapp.val.run",
@@ -42,6 +44,7 @@ app.route("/", oauth.routes);
 ```
 
 **Provides endpoints:**
+
 - `GET /login?handle=...` - Start OAuth flow
 - `GET /oauth/callback` - OAuth callback handler
 - `POST /logout` - Clear session and logout
@@ -52,6 +55,7 @@ app.route("/", oauth.routes);
 Session management interface for working with authenticated users.
 
 **Methods:**
+
 - `getOAuthSession(did: string)` - Get OAuth session for a DID
 - `getSession(request, response)` - Get session from request/response
 
@@ -71,11 +75,13 @@ if (oauthSession) {
 ```
 
 **Parameters:**
+
 - `did` (string): User's DID identifier
 
 **Returns:** Promise<OAuthSession | null>
 
 **OAuthSession Properties:**
+
 - `did` (string): User's DID
 - `handle` (string): User's handle (e.g., "user.bsky.social")
 - `pdsUrl` (string): User's Personal Data Server URL
@@ -85,13 +91,14 @@ if (oauthSession) {
 
 ### `oauthSession.makeRequest(method, url, options)`
 
-Makes authenticated requests to AT Protocol endpoints with automatic DPoP handling.
+Makes authenticated requests to AT Protocol endpoints with automatic DPoP
+handling.
 
 ```typescript
 // GET request
 const response = await oauthSession.makeRequest(
   "GET",
-  `${oauthSession.pdsUrl}/xrpc/com.atproto.repo.listRecords?repo=${did}&collection=app.bsky.feed.post`
+  `${oauthSession.pdsUrl}/xrpc/com.atproto.repo.listRecords?repo=${did}&collection=app.bsky.feed.post`,
 );
 
 // POST request
@@ -103,13 +110,14 @@ const response = await oauthSession.makeRequest(
     body: JSON.stringify({
       repo: did,
       collection: "app.bsky.feed.post",
-      record: { text: "Hello world!", createdAt: new Date().toISOString() }
-    })
-  }
+      record: { text: "Hello world!", createdAt: new Date().toISOString() },
+    }),
+  },
 );
 ```
 
 **Parameters:**
+
 - `method` (string): HTTP method ("GET", "POST", "PUT", "DELETE")
 - `url` (string): Full URL to request
 - `options` (RequestInit, optional): Additional fetch options
@@ -117,6 +125,7 @@ const response = await oauthSession.makeRequest(
 **Returns:** Promise<Response>
 
 **Features:**
+
 - Automatic DPoP proof generation
 - Token refresh handling
 - Proper authentication headers
@@ -130,15 +139,20 @@ When you mount `oauth.routes`, these endpoints become available:
 Starts the OAuth flow for a given handle.
 
 **Parameters:**
+
 - `handle` (query): User's AT Protocol handle
 
 **Example:**
+
 ```typescript
 // Redirect user to start login
-globalThis.location.href = `/login?handle=${encodeURIComponent("user.bsky.social")}`;
+globalThis.location.href = `/login?handle=${
+  encodeURIComponent("user.bsky.social")
+}`;
 ```
 
 **Flow:**
+
 1. Resolves handle to DID and PDS
 2. Initiates OAuth flow with user's PDS
 3. Redirects to authorization server
@@ -149,10 +163,12 @@ globalThis.location.href = `/login?handle=${encodeURIComponent("user.bsky.social
 Handles OAuth callback and completes authentication.
 
 **Parameters:**
+
 - `code` (query): Authorization code from OAuth server
 - `state` (query): State parameter for CSRF protection
 
 **Behavior:**
+
 - Exchanges code for tokens
 - Stores session securely
 - Redirects to your app
@@ -170,6 +186,7 @@ await fetch("/logout", {
 ```
 
 **Behavior:**
+
 - Destroys server-side session
 - Clears authentication cookies
 - Returns success response
@@ -192,6 +209,7 @@ if (data.valid) {
 ```
 
 **Response Format:**
+
 ```json
 {
   "valid": true,
@@ -202,6 +220,7 @@ if (data.valid) {
 ```
 
 **When not authenticated:**
+
 ```json
 {
   "valid": false
@@ -221,11 +240,13 @@ const storage = new DrizzleStorage(db, options?);
 ```
 
 **Parameters:**
+
 - `db`: Drizzle database instance
 - `options` (optional): Configuration options
   - `tableName` (string): Custom table name (default: "iron_session_storage")
 
 **Required Schema:**
+
 ```typescript
 export const ironSessionStorageTable = sqliteTable("iron_session_storage", {
   key: text("key").primaryKey(),
@@ -257,7 +278,9 @@ Common pattern for extracting authenticated user from requests:
 ```typescript
 async function getAuthenticatedUser(c: Context) {
   try {
-    const { getIronSession, unsealData } = await import("npm:iron-session@8.0.4");
+    const { getIronSession, unsealData } = await import(
+      "npm:iron-session@8.0.4"
+    );
     const cookieSecret = Deno.env.get("COOKIE_SECRET");
     let userDid: string | null = null;
 
@@ -318,6 +341,7 @@ async function getAuthenticatedUser(c: Context) {
 ### Common Error Responses
 
 **Authentication Required:**
+
 ```json
 {
   "error": "Authentication required",
@@ -326,6 +350,7 @@ async function getAuthenticatedUser(c: Context) {
 ```
 
 **Session Expired:**
+
 ```json
 {
   "error": "Session expired",
@@ -334,6 +359,7 @@ async function getAuthenticatedUser(c: Context) {
 ```
 
 **OAuth Flow Error:**
+
 ```json
 {
   "error": "OAuth failed",
@@ -358,13 +384,13 @@ app.get("/api/protected", async (c) => {
     // Make authenticated request
     const response = await oauthSession.makeRequest(
       "GET",
-      `${oauthSession.pdsUrl}/xrpc/some.endpoint`
+      `${oauthSession.pdsUrl}/xrpc/some.endpoint`,
     );
 
     if (!response.ok) {
       return c.json({
         error: "Upstream request failed",
-        status: response.status
+        status: response.status,
       }, response.status);
     }
 
@@ -372,7 +398,7 @@ app.get("/api/protected", async (c) => {
   } catch (error) {
     console.error("API error:", error);
     return c.json({
-      error: "Internal server error"
+      error: "Internal server error",
     }, 500);
   }
 });
@@ -414,8 +440,13 @@ interface OAuthSession {
   pdsUrl: string;
   accessToken: string;
   refreshToken: string;
-  makeRequest(method: string, url: string, options?: RequestInit): Promise<Response>;
+  makeRequest(
+    method: string,
+    url: string,
+    options?: RequestInit,
+  ): Promise<Response>;
 }
 ```
 
-This API reference covers all the main methods and patterns you'll use when integrating AT Protocol OAuth with your Hono application.
+This API reference covers all the main methods and patterns you'll use when
+integrating AT Protocol OAuth with your Hono application.

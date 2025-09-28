@@ -1,10 +1,13 @@
 # Frontend Integration Guide
 
-Learn how to integrate AT Protocol OAuth authentication in your React frontend when using `@tijs/atproto-oauth-hono`.
+Learn how to integrate AT Protocol OAuth authentication in your React frontend
+when using `@tijs/atproto-oauth-hono`.
 
 ## Overview
 
-The OAuth package provides a cookie-based authentication system. Your frontend needs to:
+The OAuth package provides a cookie-based authentication system. Your frontend
+needs to:
+
 1. Check authentication status using the `/api/auth/session` endpoint
 2. Redirect users to `/login?handle=...` for authentication
 3. Include cookies in all API requests using `credentials: "include"`
@@ -15,7 +18,7 @@ Here's a complete authentication hook for React:
 
 ```typescript
 /** @jsxImportSource https://esm.sh/react */
-import { useState, useEffect } from "https://esm.sh/react";
+import { useEffect, useState } from "https://esm.sh/react";
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -182,7 +185,8 @@ export function App() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4">
+          </div>
           <p className="text-gray-600">Checking authentication...</p>
         </div>
       </div>
@@ -285,7 +289,10 @@ const updateData = async (data: any) => {
 Handle common authentication scenarios:
 
 ```typescript
-const makeAuthenticatedRequest = async (url: string, options: RequestInit = {}) => {
+const makeAuthenticatedRequest = async (
+  url: string,
+  options: RequestInit = {},
+) => {
   const response = await fetch(url, {
     ...options,
     credentials: "include", // Always include cookies
@@ -299,7 +306,9 @@ const makeAuthenticatedRequest = async (url: string, options: RequestInit = {}) 
   }
 
   if (!response.ok) {
-    throw new Error(`Request failed: ${response.status} ${response.statusText}`);
+    throw new Error(
+      `Request failed: ${response.status} ${response.statusText}`,
+    );
   }
 
   return response;
@@ -309,6 +318,7 @@ const makeAuthenticatedRequest = async (url: string, options: RequestInit = {}) 
 ## Key Points
 
 ### 1. Always Use `credentials: "include"`
+
 ```typescript
 // ✅ Correct
 fetch("/api/endpoint", { credentials: "include" });
@@ -318,6 +328,7 @@ fetch("/api/endpoint");
 ```
 
 ### 2. No Custom Headers Needed
+
 ```typescript
 // ✅ Simple and correct
 const response = await fetch("/api/data", {
@@ -334,6 +345,7 @@ const response = await fetch("/api/data", {
 ```
 
 ### 3. Use the Built-in Session Endpoint
+
 ```typescript
 // ✅ Use the provided session endpoint
 const authStatus = await fetch("/api/auth/session", {
@@ -345,6 +357,7 @@ const session = localStorage.getItem("session");
 ```
 
 ### 4. Handle Login via Redirect
+
 ```typescript
 // ✅ Simple redirect to OAuth package's login
 globalThis.location.href = `/login?handle=${handle}`;
@@ -356,6 +369,7 @@ fetch("/api/auth/start", { ... });
 ## Common Patterns
 
 ### Protecting Routes
+
 ```typescript
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, loading } = useAuth();
@@ -373,6 +387,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 ```
 
 ### Auto-refresh Authentication
+
 ```typescript
 // Check auth status periodically (optional)
 useEffect(() => {
@@ -381,4 +396,5 @@ useEffect(() => {
 }, []);
 ```
 
-This approach leverages the OAuth package's built-in session management and provides a clean, secure authentication flow for your frontend.
+This approach leverages the OAuth package's built-in session management and
+provides a clean, secure authentication flow for your frontend.
