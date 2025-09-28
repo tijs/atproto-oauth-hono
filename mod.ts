@@ -1,24 +1,89 @@
 /**
- * Complete ATProto OAuth integration for Hono applications.
+ * Complete ATProto OAuth integration for Hono applications on Val.Town and other platforms.
  *
- * Provides plug-and-play ATProto OAuth authentication with:
- * - Web and mobile OAuth flows
- * - Session management with automatic token refresh
- * - Pluggable storage (Memory, SQLite included; Drizzle via separate import)
- * - Configurable client metadata
+ * This package provides everything needed for AT Protocol (Bluesky) OAuth authentication
+ * in your Hono applications, with special focus on Val.Town compatibility:
  *
- * @example Basic usage
+ * ## Features
+ * - **Plug-and-play OAuth flows** - Web and mobile authentication
+ * - **Cookie-based sessions** - Secure, encrypted session management
+ * - **Automatic DPoP handling** - No manual token management needed
+ * - **Multiple storage options** - Memory, SQLite, or Drizzle ORM
+ * - **Val.Town optimized** - Works perfectly with sqlite2 and Drizzle
+ * - **TypeScript support** - Full type safety and IntelliSense
+ *
+ * ## Quick Start (Val.Town)
+ *
+ * @example Complete Val.Town setup
  * ```typescript
- * import { createATProtoOAuth } from "jsr:@tijs/atproto-oauth-hono";
+ * import { Hono } from "https://esm.sh/hono";
+ * import { createATProtoOAuth } from "jsr:@tijs/atproto-oauth-hono@^0.2.7";
+ * import { DrizzleStorage } from "jsr:@tijs/atproto-oauth-hono@^0.2.7/drizzle";
+ * import { drizzle } from "https://esm.sh/drizzle-orm@0.44.5/sqlite-proxy";
+ * import { sqlite } from "https://esm.town/v/std/sqlite2";
  *
- * const oauth = createATProtoOAuth({
- *   baseUrl: "https://myapp.val.town",
- *   appName: "My App",
- *   cookieSecret: "my-secret",
+ * const app = new Hono();
+ *
+ * // Set up database
+ * const db = drizzle(async (sql, params) => {
+ *   const result = await sqlite.execute({ sql, args: params || [] });
+ *   return { rows: result.rows };
  * });
  *
+ * // Create OAuth instance
+ * const oauth = createATProtoOAuth({
+ *   baseUrl: "https://myapp.val.run",
+ *   cookieSecret: Deno.env.get("COOKIE_SECRET"),
+ *   appName: "My App",
+ *   sessionTtl: 60 * 60 * 24, // 24 hours
+ *   storage: new DrizzleStorage(db),
+ * });
+ *
+ * // Mount OAuth routes (handles /login, /logout, /oauth/callback automatically)
  * app.route("/", oauth.routes);
+ *
+ * export default app.fetch;
  * ```
+ *
+ * @example Frontend integration
+ * ```typescript
+ * // Check authentication status
+ * const response = await fetch("/api/auth/session", {
+ *   credentials: "include", // Required for cookie-based auth
+ * });
+ * const data = await response.json();
+ *
+ * if (data.valid) {
+ *   console.log("User DID:", data.did);
+ *   console.log("Handle:", data.handle);
+ * }
+ *
+ * // Login flow
+ * globalThis.location.href = `/login?handle=${encodeURIComponent("user.bsky.social")}`;
+ * ```
+ *
+ * @example Making authenticated requests
+ * ```typescript
+ * app.get("/api/user-posts", async (c) => {
+ *   const authResult = await getAuthenticatedUser(c);
+ *   if (!authResult) {
+ *     return c.json({ error: "Authentication required" }, 401);
+ *   }
+ *
+ *   const { did, oauthSession } = authResult;
+ *
+ *   // Package handles DPoP tokens automatically
+ *   const response = await oauthSession.makeRequest(
+ *     "GET",
+ *     `${oauthSession.pdsUrl}/xrpc/com.atproto.repo.listRecords?repo=${did}&collection=app.bsky.feed.post`
+ *   );
+ *
+ *   return c.json(await response.json());
+ * });
+ * ```
+ *
+ * For detailed setup instructions, see the documentation at:
+ * https://github.com/tijs/atproto-oauth-hono/tree/main/docs
  *
  * @module
  */
