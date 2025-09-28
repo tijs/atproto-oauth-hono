@@ -16,7 +16,7 @@ ATProto authentication with web and mobile support in just a few lines of code.
 
 ```typescript
 import { Hono } from "@hono/hono";
-import { createATProtoOAuth } from "jsr:@tijs/atproto-oauth-hono";
+import { createATProtoOAuth } from "jsr:@tijs/atproto-oauth-hono@^0.2.8";
 
 const app = new Hono();
 
@@ -101,7 +101,7 @@ For raw SQLite databases (like Val.Town):
 import {
   createATProtoOAuth,
   SQLiteStorage,
-} from "jsr:@tijs/atproto-oauth-hono";
+} from "jsr:@tijs/atproto-oauth-hono@^0.2.8";
 
 const storage = new SQLiteStorage(sqlite); // Your SQLite instance
 const oauth = createATProtoOAuth({
@@ -116,11 +116,11 @@ const oauth = createATProtoOAuth({
 For apps using Drizzle ORM:
 
 ```typescript
-import { createATProtoOAuth } from "jsr:@tijs/atproto-oauth-hono";
+import { createATProtoOAuth } from "jsr:@tijs/atproto-oauth-hono@^0.2.8";
 import {
   DrizzleStorage,
   ironSessionStorageTable,
-} from "jsr:@tijs/atproto-oauth-hono/drizzle";
+} from "jsr:@tijs/atproto-oauth-hono@^0.2.8/drizzle";
 import { drizzle } from "npm:drizzle-orm@0.33.0/better-sqlite3";
 
 const db = drizzle(sqlite);
@@ -143,7 +143,7 @@ the main package lightweight.
 Implement your own storage by following the `OAuthStorage` interface:
 
 ```typescript
-import type { OAuthStorage } from "jsr:@tijs/atproto-oauth-hono";
+import type { OAuthStorage } from "jsr:@tijs/atproto-oauth-hono@^0.2.8";
 
 class MyCustomStorage implements OAuthStorage {
   async get<T>(key: string): Promise<T | null> {/* your implementation */}
@@ -192,7 +192,7 @@ const oauth = createATProtoOAuth({
 
 ```typescript
 import { Hono } from "@hono/hono";
-import { createATProtoOAuth } from "jsr:@tijs/atproto-oauth-hono";
+import { createATProtoOAuth } from "jsr:@tijs/atproto-oauth-hono@^0.2.8";
 
 const app = new Hono();
 const oauth = createATProtoOAuth({
@@ -249,6 +249,23 @@ func handleAuthCallback(url: URL) {
   // Store securely and close WebView
 }
 ```
+
+## Documentation
+
+This package includes comprehensive documentation in JSDoc format:
+
+- **[JSR Documentation](https://jsr.io/@tijs/atproto-oauth-hono)** - Complete
+  API reference with examples
+- **IntelliSense Support** - Full type information and examples in your editor
+- **Module Documentation** - Detailed setup guides and usage patterns
+
+The documentation includes:
+
+- Complete Val.Town integration examples
+- Multiple storage configuration patterns
+- Frontend authentication with cookie-based sessions
+- Troubleshooting guidance for common issues
+- TypeScript type definitions with validation notes
 
 ## Built on
 
