@@ -1,6 +1,6 @@
 {
   "name": "@tijs/atproto-oauth-hono",
-  "version": "0.2.9",
+  "version": "0.3.0",
   "description": "Complete ATProto OAuth integration for Hono applications on Val.Town",
   "license": "MIT",
   "exports": {
@@ -31,7 +31,7 @@
   "imports": {
     "@hono/hono": "jsr:@hono/hono@4.9.6",
     "@tijs/oauth-client-deno": "jsr:@tijs/oauth-client-deno@^2.0.0",
-    "@tijs/hono-oauth-sessions": "jsr:@tijs/hono-oauth-sessions@0.3.1",
+    "@tijs/hono-oauth-sessions": "jsr:@tijs/hono-oauth-sessions@0.4.0",
     "@std/assert": "jsr:@std/assert@1",
     "drizzle-orm": "npm:drizzle-orm@0.33.0",
     "drizzle-orm/sqlite-core": "npm:drizzle-orm@0.33.0/sqlite-core"

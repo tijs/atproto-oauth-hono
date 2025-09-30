@@ -6,6 +6,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2025-09-30
+
+### Changed
+
+- **Dependency Update**: Updated `@tijs/hono-oauth-sessions` to 0.4.0 which
+  includes required `makeRequest()` method for proper DPoP support
+- **Type Safety**: Improved TypeScript types through dependency update ensuring
+  all sessions have DPoP authentication methods
+
+### Notes
+
+This update brings proper DPoP authentication guarantees through the type
+system. All OAuth sessions returned by `sessions.getOAuthSession()` now have
+guaranteed `makeRequest()` method for authenticated PDS operations.
+
 ## [0.2.9] - 2025-09-28
 
 ### Fixed
