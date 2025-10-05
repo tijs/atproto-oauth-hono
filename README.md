@@ -1,5 +1,7 @@
 # @tijs/atproto-oauth-hono
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/tijsteulings)
+
 Complete ATProto OAuth integration for Hono applications. Get plug-and-play
 ATProto authentication with web and mobile support in just a few lines of code.
 
@@ -274,6 +276,10 @@ The documentation includes:
 - [@tijs/hono-oauth-sessions](https://jsr.io/@tijs/hono-oauth-sessions) -
   Session management
 - [Hono](https://hono.dev) - Web framework
+
+## Support
+
+If this package helps you build your ATProto app, consider supporting its development on [Ko-fi](https://ko-fi.com/tijsteulings).
 
 ## License
 
