@@ -6,6 +6,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.2] - 2025-01-17
+
+### Changed
+
+- **Dependency Update**: Updated `@tijs/oauth-client-deno` to ^2.1.0 which
+  includes concurrency-safe session restore
+  - Fixes race conditions when multiple concurrent requests try to restore the
+    same session during token refresh
+  - Prevents intermittent "OAuth session not found" errors in multi-endpoint
+    applications
+  - No breaking changes - fully backwards compatible
+
+### Fixed
+
+- **Race Condition**: Resolved intermittent 503 errors when tags and bookmarks
+  endpoints loaded simultaneously and session was expired
+
 ## [0.3.1] - 2025-09-30
 
 ### Changed

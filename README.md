@@ -279,7 +279,8 @@ The documentation includes:
 
 ## Support
 
-If this package helps you build your ATProto app, consider supporting its development on [Ko-fi](https://ko-fi.com/tijsteulings).
+If this package helps you build your ATProto app, consider supporting its
+development on [Ko-fi](https://ko-fi.com/tijsteulings).
 
 ## License
 
