@@ -6,6 +6,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2025-10-27
+
+### Added
+
+- **Custom Redirect Support**: `/login` route now accepts a `redirect` query
+  parameter to specify post-OAuth destination
+- **OAuth Flow Enhancement**: Redirect parameter is passed through to
+  `hono-oauth-sessions` for proper state management
+
+### Changed
+
+- **Dependency Update**: Updated `@tijs/hono-oauth-sessions` to ^0.5.0 which
+  includes redirect path support
+- **Login Flow**: Users can now be redirected back to their intended destination
+  after OAuth completion
+
+### Fixed
+
+- **Bookmarklet Flow**: Fixes issue where users trying to access protected pages
+  while logged out would lose their context after authentication
+
 ## [0.3.2] - 2025-01-17
 
 ### Changed

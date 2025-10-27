@@ -58,14 +58,21 @@ export function createOAuthRoutes(
 
   // Start OAuth flow (web)
   app.get("/login", async (c) => {
-    const { handle } = c.req.query();
+    const { handle, redirect } = c.req.query();
 
     if (typeof handle !== "string") {
       return c.text("Invalid handle", 400);
     }
 
     try {
-      const authUrl = await sessions.startOAuth(handle);
+      const options: { redirectPath?: string } = {};
+
+      // Pass redirect parameter if provided
+      if (typeof redirect === "string") {
+        options.redirectPath = redirect;
+      }
+
+      const authUrl = await sessions.startOAuth(handle, options);
       return c.redirect(authUrl);
     } catch (err) {
       console.error("OAuth authorize failed:", err);
