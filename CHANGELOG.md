@@ -6,6 +6,31 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2025-01-11
+
+### Changed
+
+- **BREAKING**: Updated to `@tijs/oauth-client-deno@^3.0.0` which throws typed
+  errors
+- **BREAKING**: Updated to `@tijs/hono-oauth-sessions@^1.0.0` which propagates
+  OAuth errors
+- **Error Handling**: OAuth session errors now propagate to calling code for
+  better visibility
+
+### Improved
+
+- **Error Diagnostics**: Applications using this package now receive typed
+  errors (`SessionNotFoundError`, `RefreshTokenExpiredError`, etc.) instead of
+  null returns
+- **Debugging**: Enhanced error visibility makes it easier to diagnose OAuth
+  authentication issues
+
+### Migration Guide
+
+No code changes required in applications using this package as a facade. The
+package continues to export the same API, but now with enhanced error handling
+that propagates from the underlying OAuth libraries.
+
 ## [0.4.0] - 2025-10-27
 
 ### Added

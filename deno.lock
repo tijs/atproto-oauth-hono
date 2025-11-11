@@ -3,12 +3,12 @@
   "specifiers": {
     "jsr:@hono/hono@4.9.6": "4.9.6",
     "jsr:@hono/hono@^4.9.6": "4.9.6",
-    "jsr:@panva/jose@^6.1.0": "6.1.0",
+    "jsr:@panva/jose@^6.1.0": "6.1.1",
     "jsr:@std/assert@1": "1.0.15",
     "jsr:@std/internal@^1.0.10": "1.0.10",
     "jsr:@std/internal@^1.0.12": "1.0.12",
-    "jsr:@tijs/hono-oauth-sessions@0.5": "0.5.0",
-    "jsr:@tijs/oauth-client-deno@^2.1.0": "2.1.0",
+    "jsr:@tijs/hono-oauth-sessions@1": "1.0.0",
+    "jsr:@tijs/oauth-client-deno@3": "3.0.0",
     "npm:@atproto/syntax@0.4.0": "0.4.0",
     "npm:drizzle-orm@0.33.0": "0.33.0",
     "npm:iron-session@8.0.4": "8.0.4"
@@ -17,8 +17,8 @@
     "@hono/hono@4.9.6": {
       "integrity": "b85abb0013d167a290b1808d1d4d542dee269df31d4f47122023259fdd7e184b"
     },
-    "@panva/jose@6.1.0": {
-      "integrity": "9ecffef33d822f4326341ace652bf30eef30d4dc9f7134faf7901e5480c2e761"
+    "@panva/jose@6.1.1": {
+      "integrity": "7dcf37e2655a637d874824495571864696260093d6a3e7c09f3a89a526c63d7b"
     },
     "@std/assert@1.0.14": {
       "integrity": "68d0d4a43b365abc927f45a9b85c639ea18a9fab96ad92281e493e4ed84abaa4",
@@ -38,16 +38,16 @@
     "@std/internal@1.0.12": {
       "integrity": "972a634fd5bc34b242024402972cd5143eac68d8dffaca5eaa4dba30ce17b027"
     },
-    "@tijs/hono-oauth-sessions@0.5.0": {
-      "integrity": "7cb6736065bf30429755be0ed3971a6e5214478b7ec5d09ed190d1fcff3b8929",
+    "@tijs/hono-oauth-sessions@1.0.0": {
+      "integrity": "ab45443e3cff092b3e3816c5e58b3204fa66666290a12aa316b53dd70e42d937",
       "dependencies": [
         "jsr:@hono/hono@^4.9.6",
         "npm:@atproto/syntax",
         "npm:iron-session"
       ]
     },
-    "@tijs/oauth-client-deno@2.1.0": {
-      "integrity": "a038ec9564ca2dc0e0b11c74bcac9d890271c9a09740f7c161738269ababf114",
+    "@tijs/oauth-client-deno@3.0.0": {
+      "integrity": "1a747587bc3eb31c9280082b966f90d7e01d4551244fb9256c4e178ce746472c",
       "dependencies": [
         "jsr:@panva/jose",
         "npm:@atproto/syntax"
@@ -117,8 +117,8 @@
     "dependencies": [
       "jsr:@hono/hono@4.9.6",
       "jsr:@std/assert@1",
-      "jsr:@tijs/hono-oauth-sessions@0.5",
-      "jsr:@tijs/oauth-client-deno@^2.1.0",
+      "jsr:@tijs/hono-oauth-sessions@1",
+      "jsr:@tijs/oauth-client-deno@3",
       "npm:drizzle-orm@0.33.0"
     ]
   }
