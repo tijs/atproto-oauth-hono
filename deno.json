@@ -1,6 +1,6 @@
 {
   "name": "@tijs/atproto-oauth-hono",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Complete ATProto OAuth integration for Hono applications on Val.Town",
   "license": "MIT",
   "exports": {

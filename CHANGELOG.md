@@ -6,6 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2025-01-11
+
+### Added
+
+- **Enhanced Error Logging**: `validateSession()` helper now logs specific error
+  types for better debugging
+- Import typed error classes from oauth-client-deno for proper error handling
+
+### Improved
+
+- **Error Diagnostics**: Session validation failures now log specific error types
+  (SessionNotFoundError, RefreshTokenExpiredError, etc.) instead of generic
+  errors
+
 ## [1.0.0] - 2025-01-11
 
 ### Changed

@@ -4,7 +4,15 @@
  */
 
 import { Hono } from "@hono/hono";
-import { OAuthClient } from "@tijs/oauth-client-deno";
+import {
+  NetworkError,
+  OAuthClient,
+  RefreshTokenExpiredError,
+  RefreshTokenRevokedError,
+  SessionError,
+  SessionNotFoundError,
+  TokenExchangeError,
+} from "@tijs/oauth-client-deno";
 import { HonoOAuthSessions } from "@tijs/hono-oauth-sessions";
 import type {
   ATProtoOAuthConfig,
@@ -271,7 +279,22 @@ export function createOAuthRoutes(
         expiresAt: oauthData.expiresAt,
       };
     } catch (err) {
-      console.error("Session validation failed:", err);
+      // Log specific error types for better debugging
+      if (err instanceof SessionNotFoundError) {
+        console.log("Session validation failed: Session not found");
+      } else if (err instanceof RefreshTokenExpiredError) {
+        console.log("Session validation failed: Refresh token expired");
+      } else if (err instanceof RefreshTokenRevokedError) {
+        console.log("Session validation failed: Refresh token revoked");
+      } else if (err instanceof NetworkError) {
+        console.error("Session validation failed: Network error:", err);
+      } else if (err instanceof TokenExchangeError) {
+        console.error("Session validation failed: Token exchange error:", err);
+      } else if (err instanceof SessionError) {
+        console.error("Session validation failed: Session error:", err);
+      } else {
+        console.error("Session validation failed:", err);
+      }
       return { valid: false };
     }
   };
