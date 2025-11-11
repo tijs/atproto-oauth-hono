@@ -16,9 +16,9 @@ and this project adheres to
 
 ### Improved
 
-- **Error Diagnostics**: Session validation failures now log specific error types
-  (SessionNotFoundError, RefreshTokenExpiredError, etc.) instead of generic
-  errors
+- **Error Diagnostics**: Session validation failures now log specific error
+  types (SessionNotFoundError, RefreshTokenExpiredError, etc.) instead of
+  generic errors
 
 ## [1.0.0] - 2025-01-11
 
