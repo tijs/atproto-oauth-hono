@@ -6,6 +6,50 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.2] - 2025-01-14
+
+### Added
+
+- **Error Type Re-exports**: Now re-exports all OAuth error types from
+  `oauth-client-deno` to prevent consumers from needing direct dependencies on
+  internal implementation libraries
+  - `SessionNotFoundError`
+  - `RefreshTokenExpiredError`
+  - `RefreshTokenRevokedError`
+  - `NetworkError`
+  - `TokenExchangeError`
+  - `SessionError`
+
+### Improved
+
+- **API Design**: Consumers can now import error types directly from this
+  package instead of reaching into `@tijs/oauth-client-deno`, following proper
+  facade pattern principles
+- **Decoupling**: Applications are no longer tightly coupled to the underlying
+  OAuth client implementation
+
+### Migration Guide
+
+**Before (v1.0.1):**
+
+```typescript
+import { createATProtoOAuth } from "jsr:@tijs/atproto-oauth-hono@^1.0.1";
+import {
+  RefreshTokenExpiredError,
+  SessionNotFoundError,
+} from "jsr:@tijs/oauth-client-deno@^3.0.0"; // Direct dependency on internal lib
+```
+
+**After (v1.0.2):**
+
+```typescript
+import {
+  createATProtoOAuth,
+  RefreshTokenExpiredError,
+  SessionNotFoundError,
+} from "jsr:@tijs/atproto-oauth-hono@^1.0.2"; // All from one package
+```
+
 ## [1.0.1] - 2025-01-11
 
 ### Added
