@@ -233,6 +233,61 @@ app.get("/mobile-auth", (c) => {
 });
 ```
 
+### Protected Routes with Session Helpers
+
+The package provides convenient helpers for authenticating routes:
+
+```typescript
+import { Hono } from "@hono/hono";
+import { createATProtoOAuth } from "jsr:@tijs/atproto-oauth-hono@^1.1.0";
+
+const app = new Hono();
+const oauth = createATProtoOAuth({
+  baseUrl: "https://myapp.val.town",
+  appName: "My App",
+});
+
+app.route("/", oauth.routes);
+
+// Protected route using session helpers
+app.get("/api/bookmarks", async (c) => {
+  // Extract and validate session from cookie in one call
+  const oauthSession = await oauth.sessions.getOAuthSessionFromRequest(
+    c.req.raw,
+  );
+
+  if (!oauthSession) {
+    // Return 401 with cleared cookie
+    const response = c.json({ error: "Authentication required" }, 401);
+    response.headers.set("Set-Cookie", oauth.sessions.getClearCookieHeader());
+    return response;
+  }
+
+  // Make authenticated API calls with automatic DPoP handling
+  const response = await oauthSession.makeRequest(
+    "GET",
+    `${oauthSession.pdsUrl}/xrpc/com.atproto.repo.listRecords?collection=app.bsky.bookmark&repo=${oauthSession.did}`,
+  );
+
+  return c.json(await response.json());
+});
+```
+
+**Available Helper Methods:**
+
+- `oauth.sessions.getOAuthSessionFromRequest(req)` - Extract session from cookie
+  and validate (with automatic token refresh)
+- `oauth.sessions.getClearCookieHeader()` - Get Set-Cookie header to clear the
+  session cookie
+
+These helpers are provided by the underlying `@tijs/hono-oauth-sessions` package
+and handle all the complexity of:
+
+- Extracting and unsealing iron-session cookies
+- Extracting the DID from session data
+- Restoring OAuth sessions with automatic token refresh
+- Generating proper cookie clearing headers
+
 ## Mobile App Integration
 
 For mobile apps using WebView:
