@@ -14,9 +14,9 @@ import {
   TokenExchangeError,
 } from "@tijs/oauth-client-deno";
 import { HonoOAuthSessions } from "@tijs/hono-oauth-sessions";
+import type { Logger } from "@tijs/hono-oauth-sessions";
 import type {
   ATProtoOAuthConfig,
-  Logger,
   MobileOAuthStartRequest,
   MobileOAuthStartResponse,
   SessionValidationResult,

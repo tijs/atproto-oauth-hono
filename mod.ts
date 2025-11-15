@@ -96,24 +96,6 @@ export type {
   ProfileData,
 } from "./src/types.ts";
 
-// Re-export OAuth sessions interface and Logger from hono-oauth-sessions for convenience
-export type {
-  Logger,
-  OAuthSessionsInterface,
-  SessionInterface,
-} from "@tijs/hono-oauth-sessions";
-
-// Re-export OAuth error types that can bubble through from oauth-client-deno
-// This prevents consumers from having to import directly from the underlying library
-export {
-  NetworkError,
-  RefreshTokenExpiredError,
-  RefreshTokenRevokedError,
-  SessionError,
-  SessionNotFoundError,
-  TokenExchangeError,
-} from "@tijs/oauth-client-deno";
-
 // Core storage implementations (no external dependencies)
 export { MemoryStorage } from "./src/storage/memory.ts";
 export { SQLiteStorage } from "./src/storage/sqlite.ts";

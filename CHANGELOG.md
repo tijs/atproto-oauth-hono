@@ -11,27 +11,34 @@ and this project adheres to
 ### Fixed
 
 - **CRITICAL**: Fixed circular dependency crash in Deno
-  - Removed dual import paths to `@tijs/hono-oauth-sessions` that caused Deno
-    module resolution to fail
-  - `oauth-routes.ts` now imports `Logger` type from `./types.ts` instead of
-    directly from external package
-  - Re-exported `Logger` type in `types.ts` to avoid circular dependency
-  - Fixes production crashes where Deno would fail to resolve modules
+  - Removed problematic re-exports from `mod.ts` that caused circular
+    dependencies
+  - Applications now import types directly from source packages
+  - Cleaner architecture with explicit dependencies
+  - Fixes production crashes where Deno module resolution failed
 
-### Technical Details
+### Changed (BREAKING)
 
-The circular dependency was caused by:
+- **Removed re-exports**: Types are no longer re-exported from this package
+  - Import `SessionInterface` from `jsr:@tijs/hono-oauth-sessions`
+  - Import error types (`NetworkError`, etc.) from `jsr:@tijs/oauth-client-deno`
+  - This eliminates circular dependency issues and makes dependencies explicit
 
-1. `oauth-routes.ts` importing both from `@tijs/hono-oauth-sessions` (class) and
-   `./types.ts` (types)
-2. `types.ts` also importing from `@tijs/hono-oauth-sessions` (types)
-3. This created two entry points into the same external module from the same
-   internal module
-4. Deno's module system couldn't handle this when combined with re-exports in
-   `mod.ts`
+### Migration Guide
 
-Resolution: Centralized all type imports from `@tijs/hono-oauth-sessions`
-through `./types.ts`
+Before:
+
+```typescript
+import type { SessionInterface } from "jsr:@tijs/atproto-oauth-hono@^2.0.2";
+import { NetworkError } from "jsr:@tijs/atproto-oauth-hono@^2.0.2";
+```
+
+After:
+
+```typescript
+import type { SessionInterface } from "jsr:@tijs/hono-oauth-sessions@^2.0.1";
+import { NetworkError } from "jsr:@tijs/oauth-client-deno@^3.0.0";
+```
 
 ## [2.0.2] - 2025-01-15
 
