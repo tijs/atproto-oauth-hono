@@ -8,8 +8,8 @@
  * - **Plug-and-play OAuth flows** - Web and mobile authentication
  * - **Cookie-based sessions** - Secure, encrypted session management
  * - **Automatic DPoP handling** - No manual token management needed
- * - **Multiple storage options** - Memory, SQLite, or Drizzle ORM
- * - **Val.Town optimized** - Works perfectly with sqlite2 and Drizzle
+ * - **Simple SQLite storage** - Raw SQL for reliability and performance
+ * - **Val.Town optimized** - Works perfectly with sqlite2
  * - **TypeScript support** - Full type safety and IntelliSense
  *
  * ## Quick Start (Val.Town)
@@ -88,12 +88,7 @@ export type {
   ProfileData,
 } from "./src/types.ts";
 
-// Core storage implementations (no external dependencies)
-export { MemoryStorage } from "./src/storage/memory.ts";
-export { SQLiteStorage } from "./src/storage/sqlite.ts";
+// Storage implementations
+export { MemoryStorage } from "./src/storage/memory.ts"; // For testing
+export { SQLiteStorage } from "./src/storage/sqlite.ts"; // For production
 export type { OAuthStorage } from "./src/storage/interface.ts";
-
-// Drizzle storage and schema (requires drizzle-orm to be installed separately)
-// Import these only if you're using Drizzle ORM
-// export { DrizzleStorage } from "./src/storage/drizzle.ts";
-// export { ironSessionStorageTable } from "./src/storage/schema.ts";

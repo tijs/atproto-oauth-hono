@@ -10,7 +10,6 @@
     "jsr:@tijs/oauth-client-deno@4.0.1": "4.0.1",
     "npm:@atproto/syntax@0.4.0": "0.4.0",
     "npm:@atproto/syntax@0.4.1": "0.4.1",
-    "npm:drizzle-orm@0.44.5": "0.44.5",
     "npm:iron-session@8.0.4": "8.0.4"
   },
   "jsr": {
@@ -63,9 +62,6 @@
     },
     "cookie@0.7.2": {
       "integrity": "sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w=="
-    },
-    "drizzle-orm@0.44.5": {
-      "integrity": "sha512-jBe37K7d8ZSKptdKfakQFdeljtu3P2Cbo7tJoJSVZADzIKOBo9IAJPOmMsH2bZl90bZgh8FQlD8BjxXA/zuBkQ=="
     },
     "iron-session@8.0.4": {
       "integrity": "sha512-9ivNnaKOd08osD0lJ3i6If23GFS2LsxyMU8Gf/uBUEgm8/8CC1hrrCHFDpMo3IFbpBgwoo/eairRsaD3c5itxA==",
@@ -121,8 +117,7 @@
       "jsr:@hono/hono@4.9.6",
       "jsr:@std/assert@1",
       "jsr:@tijs/hono-oauth-sessions@2.1.1",
-      "jsr:@tijs/oauth-client-deno@4.0.1",
-      "npm:drizzle-orm@0.44.5"
+      "jsr:@tijs/oauth-client-deno@4.0.1"
     ]
   }
 }
