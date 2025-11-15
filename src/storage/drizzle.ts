@@ -32,7 +32,7 @@ export class DrizzleStorage implements OAuthStorage {
   async get<T = unknown>(key: string): Promise<T | null> {
     this.init();
 
-    const now = Date.now();
+    const now = Math.floor(Date.now() / 1000); // Unix timestamp in seconds
     const result = await this.db.select({
       value: ironSessionStorageTable.value,
     })
@@ -68,8 +68,8 @@ export class DrizzleStorage implements OAuthStorage {
   ): Promise<void> {
     this.init();
 
-    const now = Date.now();
-    const expiresAt = options?.ttl ? now + (options.ttl * 1000) : null;
+    const now = Math.floor(Date.now() / 1000); // Unix timestamp in seconds
+    const expiresAt = options?.ttl ? now + options.ttl : null; // ttl is already in seconds
     const serializedValue = typeof value === "string"
       ? value
       : JSON.stringify(value);
