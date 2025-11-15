@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.5] - 2025-01-15
+
+### Changed
+
+- **Dependency upgrades**: Updated core dependencies for improved stability
+  - Updated `@tijs/oauth-client-deno` from 3.0.0 to 4.0.1
+    - Enhanced logging system, concurrency protection, PKCE utilities
+    - Error handling improvements: `restore()` now throws typed errors
+  - Updated `@tijs/hono-oauth-sessions` from 2.0.1 to 2.1.1
+    - Uses exact version numbers instead of semver ranges
+    - Ensures reproducible builds and prevents unexpected breaking changes
+  - No breaking changes for this package - all APIs remain backward compatible
+
 ## [2.0.4] - 2025-01-15
 
 ### Fixed

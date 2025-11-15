@@ -2,14 +2,14 @@
   "version": "5",
   "specifiers": {
     "jsr:@hono/hono@4.9.6": "4.9.6",
-    "jsr:@hono/hono@^4.9.6": "4.9.6",
-    "jsr:@panva/jose@^6.1.0": "6.1.1",
+    "jsr:@panva/jose@6.1.0": "6.1.0",
     "jsr:@std/assert@1": "1.0.15",
     "jsr:@std/internal@^1.0.10": "1.0.10",
     "jsr:@std/internal@^1.0.12": "1.0.12",
-    "jsr:@tijs/hono-oauth-sessions@2.0.1": "2.0.1",
-    "jsr:@tijs/oauth-client-deno@3.0.0": "3.0.0",
+    "jsr:@tijs/hono-oauth-sessions@2.1.1": "2.1.1",
+    "jsr:@tijs/oauth-client-deno@4.0.1": "4.0.1",
     "npm:@atproto/syntax@0.4.0": "0.4.0",
+    "npm:@atproto/syntax@0.4.1": "0.4.1",
     "npm:drizzle-orm@0.33.0": "0.33.0",
     "npm:iron-session@8.0.4": "8.0.4"
   },
@@ -17,8 +17,8 @@
     "@hono/hono@4.9.6": {
       "integrity": "b85abb0013d167a290b1808d1d4d542dee269df31d4f47122023259fdd7e184b"
     },
-    "@panva/jose@6.1.1": {
-      "integrity": "7dcf37e2655a637d874824495571864696260093d6a3e7c09f3a89a526c63d7b"
+    "@panva/jose@6.1.0": {
+      "integrity": "9ecffef33d822f4326341ace652bf30eef30d4dc9f7134faf7901e5480c2e761"
     },
     "@std/assert@1.0.14": {
       "integrity": "68d0d4a43b365abc927f45a9b85c639ea18a9fab96ad92281e493e4ed84abaa4",
@@ -38,25 +38,28 @@
     "@std/internal@1.0.12": {
       "integrity": "972a634fd5bc34b242024402972cd5143eac68d8dffaca5eaa4dba30ce17b027"
     },
-    "@tijs/hono-oauth-sessions@2.0.1": {
-      "integrity": "c1a3513702f2e79b7a54011b6ec6d8ad1a613e637bfb06b12089e486ed75d817",
+    "@tijs/hono-oauth-sessions@2.1.1": {
+      "integrity": "f2920916e8bdc86ea893d4b66b1e772a5c7c31fdd11f191bc2cd50b945049ef0",
       "dependencies": [
-        "jsr:@hono/hono@^4.9.6",
-        "npm:@atproto/syntax",
+        "jsr:@hono/hono",
+        "npm:@atproto/syntax@0.4.1",
         "npm:iron-session"
       ]
     },
-    "@tijs/oauth-client-deno@3.0.0": {
-      "integrity": "1a747587bc3eb31c9280082b966f90d7e01d4551244fb9256c4e178ce746472c",
+    "@tijs/oauth-client-deno@4.0.1": {
+      "integrity": "f68773294254973ee937cccf3086fa741eaf6535d067fe4acd60c557a616fd1b",
       "dependencies": [
         "jsr:@panva/jose",
-        "npm:@atproto/syntax"
+        "npm:@atproto/syntax@0.4.0"
       ]
     }
   },
   "npm": {
     "@atproto/syntax@0.4.0": {
       "integrity": "sha512-b9y5ceHS8YKOfP3mdKmwAx5yVj9294UN7FG2XzP6V5aKUdFazEYRnR9m5n5ZQFKa3GNvz7de9guZCJ/sUTcOAA=="
+    },
+    "@atproto/syntax@0.4.1": {
+      "integrity": "sha512-CJdImtLAiFO+0z3BWTtxwk6aY5w4t8orHTMVJgkf++QRJWTxPbIFko/0hrkADB7n2EruDxDSeAgfUGehpH6ngw=="
     },
     "cookie@0.7.2": {
       "integrity": "sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w=="
@@ -117,8 +120,8 @@
     "dependencies": [
       "jsr:@hono/hono@4.9.6",
       "jsr:@std/assert@1",
-      "jsr:@tijs/hono-oauth-sessions@2.0.1",
-      "jsr:@tijs/oauth-client-deno@3.0.0",
+      "jsr:@tijs/hono-oauth-sessions@2.1.1",
+      "jsr:@tijs/oauth-client-deno@4.0.1",
       "npm:drizzle-orm@0.33.0"
     ]
   }
