@@ -17,26 +17,18 @@
  * @example Complete Val.Town setup
  * ```typescript
  * import { Hono } from "https://esm.sh/hono";
- * import { createATProtoOAuth } from "jsr:@tijs/atproto-oauth-hono@^0.2.7";
- * import { DrizzleStorage } from "jsr:@tijs/atproto-oauth-hono@^0.2.7/drizzle";
- * import { drizzle } from "https://esm.sh/drizzle-orm@0.44.5/sqlite-proxy";
+ * import { createATProtoOAuth, SQLiteStorage } from "jsr:@tijs/atproto-oauth-hono@^2";
  * import { sqlite } from "https://esm.town/v/std/sqlite2";
  *
  * const app = new Hono();
  *
- * // Set up database
- * const db = drizzle(async (sql, params) => {
- *   const result = await sqlite.execute({ sql, args: params || [] });
- *   return { rows: result.rows };
- * });
- *
- * // Create OAuth instance
+ * // Create OAuth instance with SQLiteStorage (recommended for Val.Town)
  * const oauth = createATProtoOAuth({
  *   baseUrl: "https://myapp.val.run",
  *   cookieSecret: Deno.env.get("COOKIE_SECRET"),
  *   appName: "My App",
- *   sessionTtl: 60 * 60 * 24, // 24 hours
- *   storage: new DrizzleStorage(db),
+ *   sessionTtl: 60 * 60 * 24, // 24 hours (in seconds)
+ *   storage: new SQLiteStorage(sqlite), // Simple, reliable raw SQL storage
  * });
  *
  * // Mount OAuth routes (handles /login, /logout, /oauth/callback automatically)
