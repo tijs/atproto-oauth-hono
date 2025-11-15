@@ -1,6 +1,6 @@
 import type { Hono } from "@hono/hono";
 import type { OAuthStorage } from "./storage/interface.ts";
-import type { OAuthSessionsInterface } from "@tijs/hono-oauth-sessions";
+import type { Logger, OAuthSessionsInterface } from "@tijs/hono-oauth-sessions";
 
 /**
  * Configuration options for ATProto OAuth integration.
@@ -50,6 +50,27 @@ export interface ATProtoOAuthConfig {
 
   /** Storage implementation for OAuth sessions (optional) */
   storage?: OAuthStorage;
+
+  /**
+   * Optional logger for debugging and monitoring OAuth flows.
+   * Defaults to a no-op logger (no console output).
+   * Pass console for standard logging or implement custom Logger interface.
+   *
+   * @example Enable console logging
+   * ```typescript
+   * logger: console
+   * ```
+   *
+   * @example Custom logger
+   * ```typescript
+   * logger: {
+   *   log: (...args) => myLogger.debug(...args),
+   *   warn: (...args) => myLogger.warn(...args),
+   *   error: (...args) => myLogger.error(...args),
+   * }
+   * ```
+   */
+  logger?: Logger;
 }
 
 /**

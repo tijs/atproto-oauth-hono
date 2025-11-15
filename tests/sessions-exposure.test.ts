@@ -5,7 +5,7 @@ Deno.test("Sessions instance should be exposed with all required methods", () =>
   const oauth = createATProtoOAuth({
     baseUrl: "https://test.val.town",
     appName: "Test App",
-    cookieSecret: "test-secret-for-testing-only",
+    cookieSecret: "test-secret-for-testing-only-32chars",
   });
 
   // Should have sessions property

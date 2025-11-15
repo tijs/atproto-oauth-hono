@@ -7,7 +7,7 @@ Deno.test("Client metadata should match location-feed-generator exactly", () => 
     appName: "Anchor Location Feed",
     logoUri: "https://dropanchor.app/static/anchor-logo-transparent.png",
     policyUri: "https://dropanchor.app/privacy-policy",
-    cookieSecret: "test-secret-for-testing-only",
+    cookieSecret: "test-secret-for-testing-only-32chars",
   });
 
   const metadata = oauth.getClientMetadata();

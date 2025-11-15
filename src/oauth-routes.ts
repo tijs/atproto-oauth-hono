@@ -55,6 +55,7 @@ export function createOAuthRoutes(
     baseUrl,
     mobileScheme: config.mobileScheme || "app://auth-callback",
     sessionTtl: config.sessionTtl,
+    logger: config.logger,
   });
 
   const clientMetadata = generateClientMetadata(config);

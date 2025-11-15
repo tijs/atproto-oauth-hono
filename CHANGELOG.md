@@ -6,6 +6,53 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2025-01-15
+
+### Added
+
+- **Logger Configuration**: New optional `logger` parameter in
+  `ATProtoOAuthConfig`
+  - Enables debugging and monitoring of OAuth flows
+  - Defaults to no-op logger (no console output)
+  - Can pass `console` for standard logging or implement custom `Logger`
+    interface
+  - Example: `logger: console` to enable console logging
+- **Type Re-export**: Added `Logger` type re-export from
+  `@tijs/hono-oauth-sessions` for custom logger implementations
+
+### Changed
+
+- **Dependency Update**: Updated to `@tijs/hono-oauth-sessions@^1.2.0` which
+  includes:
+  - Configurable logging system (replaces hardcoded console.log statements)
+  - Improved cookie secret validation (enforces 32-character minimum)
+  - Better type safety (removed "fake session" objects and type casts)
+  - Fixed cookie parsing to handle `=` characters in cookie values correctly
+
+### Improved
+
+- **Production Readiness**: Applications can now disable debug logging in
+  production by not providing a logger
+- **Developer Experience**: Better debugging capabilities with configurable
+  logging
+- **Error Messages**: Enhanced cookie secret validation provides clearer
+  guidance when secrets are too short
+
+### Migration Guide
+
+No code changes required - this is a fully backwards compatible update. Existing
+applications will continue to work without any modifications.
+
+**Optional: Enable Logging**
+
+```typescript
+const oauth = createATProtoOAuth({
+  baseUrl: "https://myapp.val.run",
+  appName: "My App",
+  logger: console, // NEW: Enable console logging for debugging
+});
+```
+
 ## [1.1.0] - 2025-01-14
 
 ### Changed
