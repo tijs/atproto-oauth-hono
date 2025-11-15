@@ -2,7 +2,11 @@
  * Main factory function for creating ATProto OAuth integration
  */
 
-import type { ATProtoOAuthConfig, ATProtoOAuthInstance, ProfileData } from "./types.ts";
+import type {
+  ATProtoOAuthConfig,
+  ATProtoOAuthInstance,
+  ProfileData,
+} from "./types.ts";
 import { createOAuthRoutes } from "./oauth-routes.ts";
 import { MemoryStorage } from "./storage/memory.ts";
 import { generateClientMetadata } from "./client-metadata.ts";
