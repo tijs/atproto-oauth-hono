@@ -2,6 +2,9 @@ import type { Hono } from "@hono/hono";
 import type { OAuthStorage } from "./storage/interface.ts";
 import type { Logger, OAuthSessionsInterface } from "@tijs/hono-oauth-sessions";
 
+// Re-export Logger type for internal use
+export type { Logger };
+
 /**
  * Configuration options for ATProto OAuth integration.
  *

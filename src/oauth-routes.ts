@@ -16,6 +16,7 @@ import {
 import { HonoOAuthSessions } from "@tijs/hono-oauth-sessions";
 import type {
   ATProtoOAuthConfig,
+  Logger,
   MobileOAuthStartRequest,
   MobileOAuthStartResponse,
   SessionValidationResult,
@@ -49,7 +50,7 @@ export function createOAuthRoutes(
   });
 
   // Default no-op logger if none provided (prevents crashes when trying to log)
-  const defaultLogger = {
+  const defaultLogger: Logger = {
     log: () => {},
     warn: () => {},
     error: () => {},

@@ -6,6 +6,33 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.3] - 2025-01-15
+
+### Fixed
+
+- **CRITICAL**: Fixed circular dependency crash in Deno
+  - Removed dual import paths to `@tijs/hono-oauth-sessions` that caused Deno
+    module resolution to fail
+  - `oauth-routes.ts` now imports `Logger` type from `./types.ts` instead of
+    directly from external package
+  - Re-exported `Logger` type in `types.ts` to avoid circular dependency
+  - Fixes production crashes where Deno would fail to resolve modules
+
+### Technical Details
+
+The circular dependency was caused by:
+
+1. `oauth-routes.ts` importing both from `@tijs/hono-oauth-sessions` (class) and
+   `./types.ts` (types)
+2. `types.ts` also importing from `@tijs/hono-oauth-sessions` (types)
+3. This created two entry points into the same external module from the same
+   internal module
+4. Deno's module system couldn't handle this when combined with re-exports in
+   `mod.ts`
+
+Resolution: Centralized all type imports from `@tijs/hono-oauth-sessions`
+through `./types.ts`
+
 ## [2.0.2] - 2025-01-15
 
 ### Fixed
