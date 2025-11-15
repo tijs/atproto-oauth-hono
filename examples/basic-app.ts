@@ -30,11 +30,14 @@ app.get("/api/profile", async (c) => {
     return c.json({ error: "Unauthorized" }, 401);
   }
 
+  // Fetch profile data using the getProfile helper
+  const profile = await oauth.getProfile(session.did!);
+
   return c.json({
     did: session.did,
     handle: session.handle,
-    displayName: session.displayName,
-    avatar: session.avatar,
+    displayName: profile?.displayName,
+    avatar: profile?.avatar,
   });
 });
 

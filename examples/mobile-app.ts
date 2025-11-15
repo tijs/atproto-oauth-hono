@@ -109,13 +109,16 @@ app.post("/api/mobile/validate", async (c) => {
       return c.json({ valid: false }, 401);
     }
 
+    // Fetch profile data using the getProfile helper
+    const profile = await oauth.getProfile(session.did!);
+
     return c.json({
       valid: true,
       user: {
         did: session.did,
         handle: session.handle,
-        displayName: session.displayName,
-        avatar: session.avatar,
+        displayName: profile?.displayName,
+        avatar: profile?.avatar,
       },
     });
   } catch (err) {
@@ -132,12 +135,15 @@ app.get("/api/user/profile", async (c) => {
     return c.json({ error: "Please login to continue" }, 401);
   }
 
+  // Fetch profile data using the getProfile helper
+  const profile = await oauth.getProfile(session.did!);
+
   // Return user profile data
   return c.json({
     did: session.did,
     handle: session.handle,
-    displayName: session.displayName,
-    avatar: session.avatar,
+    displayName: profile?.displayName,
+    avatar: profile?.avatar,
     // Access token available for AT Protocol API calls
     hasValidToken: !!session.accessToken,
   });
