@@ -92,15 +92,14 @@ export interface ClientMetadata {
 }
 
 /**
- * Session validation result
+ * Session validation result.
+ * Applications should fetch profile data separately if needed.
  */
 export interface SessionValidationResult {
   valid: boolean;
   did?: string;
   handle?: string;
   userHandle?: string;
-  displayName?: string;
-  avatar?: string;
   accessToken?: string;
   refreshToken?: string;
   expiresAt?: number;
@@ -121,6 +120,23 @@ export interface MobileOAuthStartResponse {
   success: boolean;
   authUrl?: string;
   error?: string;
+}
+
+/**
+ * AT Protocol user profile data
+ */
+export interface ProfileData {
+  did: string;
+  handle: string;
+  displayName?: string;
+  description?: string;
+  avatar?: string;
+  banner?: string;
+  followsCount?: number;
+  followersCount?: number;
+  postsCount?: number;
+  indexedAt?: string;
+  labels?: unknown[];
 }
 
 /**
@@ -161,6 +177,23 @@ export interface ATProtoOAuthInstance {
 
   /** Generate client metadata */
   getClientMetadata: () => ClientMetadata;
+
+  /**
+   * Get AT Protocol profile data for a user.
+   * Fetches profile information from the user's PDS including display name, avatar, etc.
+   *
+   * @param did - User's DID
+   * @returns Profile data or null if not found or session invalid
+   *
+   * @example
+   * ```typescript
+   * const profile = await oauth.getProfile(userDid);
+   * if (profile) {
+   *   console.log(profile.displayName, profile.avatar);
+   * }
+   * ```
+   */
+  getProfile: (did: string) => Promise<ProfileData | null>;
 
   /** Direct access to sessions instance for advanced usage */
   sessions: OAuthSessionsInterface;

@@ -93,6 +93,7 @@ export type {
   ATProtoOAuthConfig,
   ATProtoOAuthInstance,
   ClientMetadata,
+  ProfileData,
 } from "./src/types.ts";
 
 // Re-export OAuth sessions interface and Logger from hono-oauth-sessions for convenience

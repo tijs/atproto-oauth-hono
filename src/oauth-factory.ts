@@ -2,7 +2,7 @@
  * Main factory function for creating ATProto OAuth integration
  */
 
-import type { ATProtoOAuthConfig, ATProtoOAuthInstance } from "./types.ts";
+import type { ATProtoOAuthConfig, ATProtoOAuthInstance, ProfileData } from "./types.ts";
 import { createOAuthRoutes } from "./oauth-routes.ts";
 import { MemoryStorage } from "./storage/memory.ts";
 import { generateClientMetadata } from "./client-metadata.ts";
@@ -87,10 +87,54 @@ export function createATProtoOAuth(
     storage,
   );
 
+  /**
+   * Get AT Protocol profile data for a user
+   */
+  const getProfile = async (did: string): Promise<ProfileData | null> => {
+    try {
+      // Get OAuth session to make authenticated request
+      const oauthSession = await sessions.getOAuthSession(did);
+      if (!oauthSession) {
+        return null;
+      }
+
+      // Fetch profile from user's PDS
+      const response = await oauthSession.makeRequest(
+        "GET",
+        `${oauthSession.pdsUrl}/xrpc/app.bsky.actor.getProfile?actor=${did}`,
+      );
+
+      if (!response.ok) {
+        console.error(`Profile fetch failed with status: ${response.status}`);
+        return null;
+      }
+
+      const profile = await response.json();
+
+      return {
+        did: profile.did,
+        handle: profile.handle,
+        displayName: profile.displayName,
+        description: profile.description,
+        avatar: profile.avatar,
+        banner: profile.banner,
+        followsCount: profile.followsCount,
+        followersCount: profile.followersCount,
+        postsCount: profile.postsCount,
+        indexedAt: profile.indexedAt,
+        labels: profile.labels,
+      };
+    } catch (error) {
+      console.error("Failed to fetch profile:", error);
+      return null;
+    }
+  };
+
   return {
     routes,
     validateSession,
     getClientMetadata: () => generateClientMetadata(normalizedConfig),
+    getProfile,
     sessions,
   };
 }

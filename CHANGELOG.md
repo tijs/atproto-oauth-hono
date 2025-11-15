@@ -6,6 +6,80 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2025-01-15
+
+### Added
+
+- **`getProfile(did)` Helper**: New AT Protocol-specific helper for fetching
+  user profile data
+  - Handles PDS endpoint details internally
+  - Returns full profile data: displayName, avatar, banner, follower counts,
+    etc.
+  - Returns null if session invalid or profile not found
+  - Example: `const profile = await oauth.getProfile(userDid);`
+- **`ProfileData` Type**: Comprehensive type for AT Protocol profile data
+
+### Removed (BREAKING CHANGES)
+
+- **Profile Data from Validation**: Removed automatic profile data fetching from
+  session validation
+  - `SessionValidationResult` no longer includes `displayName` or `avatar`
+    fields
+  - `/api/auth/session` endpoint no longer returns profile data
+  - Use `getProfile(did)` helper instead when profile data is needed
+
+### Changed
+
+- **Dependency Update**: Updated to `@tijs/hono-oauth-sessions@^2.0.0` which
+  implements minimal session management:
+  - Removed automatic token refresh from validateSession()
+  - Removed automatic profile fetching from handleCallback()
+  - Token refresh now handled solely by oauth-client-deno's restore() method
+  - Profile fetching moved to AT Protocol-specific layer (this package)
+
+### Improved
+
+- **Clean Architecture**: Clear separation of concerns
+  - hono-oauth-sessions: Generic OAuth session management
+  - atproto-oauth-hono: AT Protocol-specific features (like profile fetching)
+- **Flexibility**: Applications fetch profile data only when needed using
+  `getProfile()`
+- **Better Abstraction**: Applications don't need to know about PDS endpoints or
+  XRPC
+
+### Migration Guide
+
+**Profile Data**: Use the new `getProfile()` helper
+
+```typescript
+// Before (automatic in validation):
+const session = await oauth.validateSession(request);
+console.log(session.displayName, session.avatar);
+
+// After (use getProfile helper):
+const session = await oauth.validateSession(request);
+if (session.valid) {
+  const profile = await oauth.getProfile(session.did);
+  if (profile) {
+    console.log(profile.displayName, profile.avatar);
+  }
+}
+```
+
+**Benefits of new approach:**
+
+- Fetch profile data only when needed (better performance)
+- Get complete profile data (banner, follower counts, etc.)
+- No need to know about PDS endpoints or XRPC
+- AT Protocol-specific logic stays in AT Protocol-specific package
+
+**Token Refresh**: Now automatic via oauth-client-deno
+
+Token refresh is still automatic, but now handled by the OAuth client's
+`restore()` method when you call `oauth.sessions.getOAuthSession(did)` or
+`oauth.getProfile(did)`. No code changes needed, just be aware the
+responsibility has moved to the correct layer.
+
 ## [1.2.0] - 2025-01-15
 
 ### Added

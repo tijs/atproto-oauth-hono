@@ -212,8 +212,6 @@ export function createOAuthRoutes(
         did: result.did,
         handle: result.handle || oauthData.handle,
         userHandle: result.handle || oauthData.handle, // Add userHandle for mobile client compatibility
-        displayName: result.displayName || oauthData.displayName,
-        avatar: oauthData.avatar,
         accessToken: oauthData.accessToken,
         refreshToken: oauthData.refreshToken,
         expiresAt: oauthData.expiresAt,
@@ -273,8 +271,6 @@ export function createOAuthRoutes(
         did: result.did,
         handle: result.handle || oauthData.handle,
         userHandle: result.handle || oauthData.handle,
-        displayName: result.displayName || oauthData.displayName,
-        avatar: oauthData.avatar,
         accessToken: oauthData.accessToken,
         refreshToken: oauthData.refreshToken,
         expiresAt: oauthData.expiresAt,
