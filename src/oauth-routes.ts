@@ -48,6 +48,13 @@ export function createOAuthRoutes(
     storage,
   });
 
+  // Default no-op logger if none provided (prevents crashes when trying to log)
+  const defaultLogger = {
+    log: () => {},
+    warn: () => {},
+    error: () => {},
+  };
+
   const sessions = new HonoOAuthSessions({
     oauthClient,
     storage,
@@ -55,7 +62,7 @@ export function createOAuthRoutes(
     baseUrl,
     mobileScheme: config.mobileScheme || "app://auth-callback",
     sessionTtl: config.sessionTtl,
-    logger: config.logger,
+    logger: config.logger || defaultLogger,
   });
 
   const clientMetadata = generateClientMetadata(config);

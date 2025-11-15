@@ -6,6 +6,31 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.2] - 2025-01-15
+
+### Fixed
+
+- **CRITICAL**: Added default logger to prevent production crashes
+  - Added fallback `noopLogger` in `createOAuthRoutes` when `config.logger` is
+    undefined
+  - Prevents `TypeError: Cannot read properties of undefined (reading 'log')`
+    errors
+  - Ensures logger is never undefined even if not explicitly configured
+
+### Changed
+
+- **Dependency Update**: Uses `@tijs/hono-oauth-sessions@^2.0.1` which includes
+  critical logger fix
+  - Both packages now have defense-in-depth logger defaults
+  - Applications are protected at multiple layers
+
+### Improved
+
+- **Best Practices**: Applications should now explicitly pass `logger: console`
+  for debugging
+  - No-op logger used by default (no console noise in production)
+  - Better visibility when logger is intentionally provided
+
 ## [2.0.1] - 2025-01-15
 
 ### Fixed
