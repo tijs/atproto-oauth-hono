@@ -52,23 +52,48 @@ export class SQLiteStorage implements OAuthStorage {
     await this.init();
 
     const now = Date.now();
-    const result = await this.db.execute({
-      sql: `
-        SELECT value FROM ${this.tableName}
-        WHERE key = ? AND (expires_at IS NULL OR expires_at > ?)
-        LIMIT 1
-      `,
-      args: [key, now],
+    console.log("[SQLiteStorage.get]", {
+      key,
+      now,
+      nowDate: new Date(now).toISOString(),
     });
 
+    const result = await this.db.execute({
+      sql: `
+        SELECT value, expires_at FROM ${this.tableName}
+        WHERE key = ?
+        LIMIT 1
+      `,
+      args: [key],
+    });
+
+    console.log("[SQLiteStorage.get] All matching rows:", result.rows);
+
     if (result.rows.length === 0) {
+      console.log("[SQLiteStorage.get] ❌ Key not found in database");
+      return null;
+    }
+
+    const expiresAt = result.rows[0][1];
+    console.log("[SQLiteStorage.get] Row found:", {
+      expiresAt,
+      expiresAtDate: expiresAt ? new Date(expiresAt).toISOString() : null,
+      isExpired: expiresAt !== null && expiresAt <= now,
+    });
+
+    // Check expiration
+    if (expiresAt !== null && expiresAt <= now) {
+      console.log("[SQLiteStorage.get] ❌ Key expired");
       return null;
     }
 
     try {
       const value = result.rows[0][0];
-      return JSON.parse(value) as T;
+      const parsed = JSON.parse(value) as T;
+      console.log("[SQLiteStorage.get] ✅ Returning value");
+      return parsed;
     } catch {
+      console.log("[SQLiteStorage.get] ✅ Returning raw value (not JSON)");
       return result.rows[0][0] as T;
     }
   }
@@ -86,6 +111,15 @@ export class SQLiteStorage implements OAuthStorage {
       ? value
       : JSON.stringify(value);
 
+    console.log("[SQLiteStorage.set]", {
+      key,
+      ttl: options?.ttl,
+      now,
+      nowDate: new Date(now).toISOString(),
+      expiresAt,
+      expiresAtDate: expiresAt ? new Date(expiresAt).toISOString() : null,
+    });
+
     await this.db.execute({
       sql: `
         INSERT INTO ${this.tableName} (key, value, expires_at, created_at, updated_at)
@@ -97,6 +131,8 @@ export class SQLiteStorage implements OAuthStorage {
       `,
       args: [key, serializedValue, expiresAt, now, now],
     });
+
+    console.log("[SQLiteStorage.set] ✅ Stored successfully");
   }
 
   async delete(key: string): Promise<void> {
