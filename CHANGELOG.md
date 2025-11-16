@@ -6,6 +6,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.1] - 2025-01-16
+
+### Fixed
+
+- **CRITICAL**: OAuth client now properly receives logger configuration
+  - Fixed token refresh operations not being logged due to missing logger
+  - Added logger adapter to map Logger interface (log/warn/error) to OAuth
+    client's Logger interface (debug/info/warn/error)
+  - Token refresh, session restoration, and authentication errors are now
+    properly logged
+  - Essential for debugging session timeout and token refresh issues
+
+### Improved
+
+- **Enhanced `/api/auth/session` endpoint logging** for better debugging
+  - Added detailed error logging for different failure scenarios
+    (session_invalid, missing_did, oauth_data_missing, exception_thrown)
+  - Logs token expiration status with timestamps and time until expiry
+  - Error responses now include `reason` field to identify specific failure
+    types
+  - All exceptions logged with full stack traces
+- **Dependencies**: Updated `@tijs/hono-oauth-sessions` to 2.1.2 for improved
+  session validation logging
+
 ## [2.1.0] - 2025-01-16
 
 ### Added

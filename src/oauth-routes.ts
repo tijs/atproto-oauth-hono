@@ -42,19 +42,37 @@ export function createOAuthRoutes(
     (typeof Deno !== "undefined" ? Deno.env.get("COOKIE_SECRET") : undefined) ||
     "default-secret-for-development-only";
 
-  // Create OAuth client and sessions manager
-  const oauthClient = new OAuthClient({
-    clientId: `${baseUrl}/client-metadata.json`,
-    redirectUri: `${baseUrl}/oauth/callback`,
-    storage,
-  });
-
   // Default no-op logger if none provided (prevents crashes when trying to log)
   const defaultLogger: Logger = {
     log: () => {},
     warn: () => {},
     error: () => {},
   };
+
+  // Use provided logger or default
+  const logger = config.logger || defaultLogger;
+
+  // Create OAuth client with logger to enable token refresh logging
+  // Map the Logger interface (log/warn/error) to OAuth client's Logger interface (debug/info/warn/error)
+  const oauthClient = new OAuthClient({
+    clientId: `${baseUrl}/client-metadata.json`,
+    redirectUri: `${baseUrl}/oauth/callback`,
+    storage,
+    logger: {
+      debug: (msg: string, ...args: unknown[]) => {
+        if (logger.log) logger.log(`[DEBUG] ${msg}`, ...args);
+      },
+      info: (msg: string, ...args: unknown[]) => {
+        if (logger.log) logger.log(`[INFO] ${msg}`, ...args);
+      },
+      warn: (msg: string, ...args: unknown[]) => {
+        if (logger.warn) logger.warn(msg, ...args);
+      },
+      error: (msg: string, ...args: unknown[]) => {
+        if (logger.error) logger.error(msg, ...args);
+      },
+    },
+  });
 
   const sessions = new HonoOAuthSessions({
     oauthClient,
@@ -63,7 +81,7 @@ export function createOAuthRoutes(
     baseUrl,
     mobileScheme: config.mobileScheme || "app://auth-callback",
     sessionTtl: config.sessionTtl,
-    logger: config.logger || defaultLogger,
+    logger,
   });
 
   const clientMetadata = generateClientMetadata(config);
@@ -206,13 +224,49 @@ export function createOAuthRoutes(
       }
 
       if (!result.valid || !result.did) {
-        return c.json({ valid: false }, 401);
+        console.error(
+          "Session validation failed: Invalid session or missing DID",
+          {
+            valid: result.valid,
+            hasDid: !!result.did,
+            reason: !result.valid ? "session_invalid" : "missing_did",
+          },
+        );
+        return c.json({
+          valid: false,
+          error: "Session invalid or expired",
+          reason: !result.valid ? "session_invalid" : "missing_did",
+        }, 401);
       }
 
       // Get additional OAuth session data for API access
       const oauthData = await sessions.getStoredOAuthData(result.did);
       if (!oauthData) {
-        return c.json({ valid: false }, 401);
+        console.error("OAuth session data not found for DID:", result.did, {
+          reason: "oauth_data_missing",
+          did: result.did,
+        });
+        return c.json({
+          valid: false,
+          error: "OAuth session data not found",
+          reason: "oauth_data_missing",
+        }, 401);
+      }
+
+      // Check if access token is expired and log it
+      const now = Date.now();
+      const expiresAt = oauthData.expiresAt
+        ? new Date(oauthData.expiresAt).getTime()
+        : null;
+      if (expiresAt) {
+        const timeUntilExpiry = expiresAt - now;
+        console.log("Access token expiration check:", {
+          did: result.did,
+          expiresAt: new Date(expiresAt).toISOString(),
+          currentTime: new Date(now).toISOString(),
+          timeUntilExpiryMinutes: Math.round(timeUntilExpiry / 1000 / 60),
+          isExpired: timeUntilExpiry <= 0,
+        });
       }
 
       const sessionResult: SessionValidationResult = {
@@ -227,8 +281,16 @@ export function createOAuthRoutes(
 
       return c.json(sessionResult);
     } catch (err) {
-      console.error("Session validation failed:", err);
-      return c.json({ valid: false }, 401);
+      console.error("Session validation failed with exception:", {
+        error: err instanceof Error ? err.message : String(err),
+        stack: err instanceof Error ? err.stack : undefined,
+        reason: "exception_thrown",
+      });
+      return c.json({
+        valid: false,
+        error: "Session validation failed",
+        reason: "exception_thrown",
+      }, 401);
     }
   });
 
