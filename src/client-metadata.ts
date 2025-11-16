@@ -11,7 +11,7 @@ export function generateClientMetadata(
 
   const metadata: ClientMetadata = {
     client_name: config.appName,
-    client_id: `${baseUrl}/client-metadata.json`,
+    client_id: `${baseUrl}/oauth-client-metadata.json`,
     client_uri: baseUrl,
     redirect_uris: [`${baseUrl}/oauth/callback`],
     scope: config.scope || "atproto transition:generic",

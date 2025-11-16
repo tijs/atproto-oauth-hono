@@ -55,7 +55,7 @@ export function createOAuthRoutes(
   // Create OAuth client with logger to enable token refresh logging
   // Map the Logger interface (log/warn/error) to OAuth client's Logger interface (debug/info/warn/error)
   const oauthClient = new OAuthClient({
-    clientId: `${baseUrl}/client-metadata.json`,
+    clientId: `${baseUrl}/oauth-client-metadata.json`,
     redirectUri: `${baseUrl}/oauth/callback`,
     storage,
     logger: {
@@ -87,7 +87,7 @@ export function createOAuthRoutes(
   const clientMetadata = generateClientMetadata(config);
 
   // OAuth client metadata
-  app.get("/client-metadata.json", (c) => {
+  app.get("/oauth-client-metadata.json", (c) => {
     return c.json(clientMetadata);
   });
 

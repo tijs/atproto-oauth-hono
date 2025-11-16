@@ -13,7 +13,7 @@ Deno.test("generateClientMetadata - basic configuration", () => {
   assertEquals(metadata.client_name, "Test App");
   assertEquals(
     metadata.client_id,
-    "https://myapp.val.town/client-metadata.json",
+    "https://myapp.val.town/oauth-client-metadata.json",
   );
   assertEquals(metadata.client_uri, "https://myapp.val.town");
   assertEquals(metadata.redirect_uris, [

@@ -16,7 +16,7 @@ Deno.test("Client metadata should match location-feed-generator exactly", () => 
   assertEquals(metadata.client_name, "Anchor Location Feed");
   assertEquals(
     metadata.client_id,
-    "https://dropanchor.app/client-metadata.json",
+    "https://dropanchor.app/oauth-client-metadata.json",
   );
   assertEquals(metadata.client_uri, "https://dropanchor.app");
   assertEquals(metadata.redirect_uris, [

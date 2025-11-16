@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2025-01-16
+
+### Changed
+
+- **OAuth Client Metadata Path**: Changed from `/client-metadata.json` to
+  `/oauth-client-metadata.json`
+  - Improves UX on OAuth authorization screen by showing just the brand domain
+    instead of suspicious URL string
+  - Based on Bluesky community recommendation for better trust signals
+  - **BREAKING**: Applications must update their served metadata endpoint path
+  - Routes automatically updated to serve at new path
+
 ## [2.1.1] - 2025-01-16
 
 ### Fixed
