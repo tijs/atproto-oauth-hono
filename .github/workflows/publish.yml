@@ -30,4 +30,4 @@ jobs:
         run: deno test --allow-all
 
       - name: Publish package
-        run: deno publish
+        run: deno publish --allow-dirty
