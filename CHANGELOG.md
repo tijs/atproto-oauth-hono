@@ -6,6 +6,42 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.11] - 2025-11-16
+
+### Fixed
+
+- **CRITICAL**: Fixed SQLite integer overflow in local development environments
+  - Changed timestamp storage from INTEGER to TEXT in SQLiteStorage
+  - Prevents 32-bit integer overflow when using Deno's `@db/sqlite` library
+  - JavaScript timestamps (13-digit milliseconds) were being corrupted to
+    negative values
+  - Added automatic migration for existing databases with INTEGER timestamps
+  - Val.Town production environments unaffected (their sqlite2 API handles
+    64-bit integers correctly)
+
+### Changed
+
+- **Storage Schema**: SQLiteStorage now stores `expires_at`, `created_at`, and
+  `updated_at` as TEXT
+  - Timestamps stored as TEXT strings to avoid integer overflow across different
+    SQLite implementations
+  - Backward compatible: automatic migration converts existing INTEGER values to
+    TEXT
+  - No application code changes required
+
+### Technical Details
+
+The issue occurred because:
+
+- Deno's `@db/sqlite@0.12` library reads INTEGER columns as 32-bit signed
+  integers
+- JavaScript timestamps exceed 32-bit max value (2,147,483,647)
+- This caused overflow: `1763283863114` → `-1947695542`
+- OAuth state validation failed because timestamps appeared expired
+
+This fix ensures consistent behavior across all SQLite implementations and
+development environments.
+
 ## [2.0.5] - 2025-01-15
 
 ### Changed

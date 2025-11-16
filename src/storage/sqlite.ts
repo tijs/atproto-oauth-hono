@@ -30,13 +30,54 @@ export class SQLiteStorage implements OAuthStorage {
         CREATE TABLE IF NOT EXISTS ${this.tableName} (
           key TEXT PRIMARY KEY,
           value TEXT NOT NULL,
-          expires_at INTEGER,
-          created_at INTEGER NOT NULL,
-          updated_at INTEGER NOT NULL
+          expires_at TEXT,
+          created_at TEXT NOT NULL,
+          updated_at TEXT NOT NULL
         )
       `,
       args: [],
     });
+
+    // Migrate existing INTEGER timestamps to TEXT
+    // This handles databases created with the old schema
+    try {
+      // Check if we have any rows with INTEGER timestamps
+      const checkResult = await this.db.execute({
+        sql:
+          `SELECT key, expires_at, created_at, updated_at FROM ${this.tableName} LIMIT 1`,
+        args: [],
+      });
+
+      if (checkResult.rows.length > 0) {
+        const expiresAt = checkResult.rows[0][1];
+        // If expires_at is a number (not a string starting with a digit), migrate all rows
+        if (typeof expiresAt === "number") {
+          console.log(
+            "[SQLiteStorage] Migrating INTEGER timestamps to TEXT format...",
+          );
+
+          // Update all rows to convert INTEGER to TEXT
+          await this.db.execute({
+            sql: `
+              UPDATE ${this.tableName}
+              SET
+                expires_at = CAST(expires_at AS TEXT),
+                created_at = CAST(created_at AS TEXT),
+                updated_at = CAST(updated_at AS TEXT)
+            `,
+            args: [],
+          });
+
+          console.log("[SQLiteStorage] ✅ Migration completed");
+        }
+      }
+    } catch (err) {
+      // Migration might fail on some SQLite implementations, that's ok
+      console.log(
+        "[SQLiteStorage] Migration skipped (not needed or not supported):",
+        err,
+      );
+    }
 
     // Create index on expires_at for efficient cleanup
     await this.db.execute({
@@ -74,8 +115,14 @@ export class SQLiteStorage implements OAuthStorage {
       return null;
     }
 
-    const expiresAt = result.rows[0][1];
+    // Parse expires_at from TEXT to number
+    const expiresAtRaw = result.rows[0][1];
+    const expiresAt = expiresAtRaw !== null
+      ? parseInt(expiresAtRaw as string, 10)
+      : null;
+
     console.log("[SQLiteStorage.get] Row found:", {
+      expiresAtRaw,
       expiresAt,
       expiresAtDate: expiresAt ? new Date(expiresAt).toISOString() : null,
       isExpired: expiresAt !== null && expiresAt <= now,
@@ -129,7 +176,13 @@ export class SQLiteStorage implements OAuthStorage {
           expires_at = excluded.expires_at,
           updated_at = excluded.updated_at
       `,
-      args: [key, serializedValue, expiresAt, now, now],
+      args: [
+        key,
+        serializedValue,
+        expiresAt !== null ? expiresAt.toString() : null,
+        now.toString(),
+        now.toString(),
+      ],
     });
 
     console.log("[SQLiteStorage.set] ✅ Stored successfully");
