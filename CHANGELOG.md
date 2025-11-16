@@ -6,6 +6,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2025-01-16
+
+### Added
+
+- **Optional Authentication Middleware**: New `createAuthMiddleware()` function
+  for simplified route authentication
+  - Automatically extracts and validates OAuth sessions from requests
+  - Returns 401 with cleared cookies for invalid sessions
+  - Sets `oauthSession` and `userDid` in Hono context for type-safe access
+  - Reduces boilerplate in route handlers
+  - Example:
+    `app.post("/api/bookmarks", requireAuth, async (c) => { const session = c.get("oauthSession"); })`
+- **Export from mod.ts**: Middleware is now exported alongside core package
+  functions
+
+### Improved
+
+- **Developer Experience**: Applications can eliminate duplicate auth helper
+  code by using the built-in middleware
+- **Type Safety**: Middleware enables type-safe context variables with Hono's
+  typed context
+- **Code Reusability**: Common authentication patterns now available as reusable
+  middleware
+
 ## [2.0.11] - 2025-11-16
 
 ### Fixed

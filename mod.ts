@@ -92,3 +92,6 @@ export type {
 export { MemoryStorage } from "./src/storage/memory.ts"; // For testing
 export { SQLiteStorage } from "./src/storage/sqlite.ts"; // For production
 export type { OAuthStorage } from "./src/storage/interface.ts";
+
+// Optional Hono middleware for authentication
+export { createAuthMiddleware } from "./src/middleware.ts";
