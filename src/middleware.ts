@@ -82,19 +82,16 @@ export function createAuthMiddleware(
 
     if (!session) {
       // Return 401 and clear invalid session cookie
-      return c.json(
+      const response = c.json(
         {
           error: "Authentication required",
           message: "Please log in again",
           code: "SESSION_EXPIRED",
         },
         401,
-        {
-          headers: {
-            "Set-Cookie": sessions.getClearCookieHeader(),
-          },
-        },
       );
+      response.headers.set("Set-Cookie", sessions.getClearCookieHeader());
+      return response;
     }
 
     // Store session in context for downstream handlers
