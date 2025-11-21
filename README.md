@@ -142,34 +142,14 @@ the main package lightweight.
 
 ### Custom Storage
 
-Implement your own storage by following the `OAuthStorage` interface:
-
-```typescript
-import type { OAuthStorage } from "jsr:@tijs/atproto-oauth-hono@^0.2.8";
-
-class MyCustomStorage implements OAuthStorage {
-  async get<T>(key: string): Promise<T | null> {/* your implementation */}
-  async set<T>(
-    key: string,
-    value: T,
-    options?: { ttl?: number },
-  ): Promise<void> {/* your implementation */}
-  async delete(key: string): Promise<void> {/* your implementation */}
-}
-```
+You can implement your own storage by following the `OAuthStorage` interface.
+See the [@tijs/oauth-client-deno documentation](https://jsr.io/@tijs/oauth-client-deno) for the interface definition and examples.
 
 ## Session Configuration
 
-Configure session duration for different use cases:
+Configure session duration for different use cases. For detailed session security and configuration options, see the [@tijs/hono-oauth-sessions documentation](https://jsr.io/@tijs/hono-oauth-sessions).
 
 ```typescript
-// Short sessions for high-security apps (1 hour)
-const oauth = createATProtoOAuth({
-  baseUrl: "https://myapp.val.town",
-  appName: "High Security App",
-  sessionTtl: 60 * 60, // 1 hour
-});
-
 // Standard sessions (default: 7 days)
 const oauth = createATProtoOAuth({
   baseUrl: "https://myapp.val.town",
@@ -184,9 +164,6 @@ const oauth = createATProtoOAuth({
   sessionTtl: 60 * 60 * 24 * 30, // 30 days - good for mobile
 });
 ```
-
-> **Mobile App Recommendation**: Use 30+ day sessions for mobile apps to avoid
-> frequent re-authentication in WebView scenarios.
 
 ## Examples
 
@@ -220,22 +197,17 @@ export default app;
 
 ### Mobile App Integration
 
-```typescript
-const oauth = createATProtoOAuth({
-  baseUrl: "https://myapp.val.town",
-  appName: "My Mobile App",
-  mobileScheme: "myapp://auth-callback", // Your custom scheme
-});
+For mobile apps using WebView:
 
-// Mobile auth page at /mobile-auth
-app.get("/mobile-auth", (c) => {
-  return c.html(`<form action="/login">...</form>`);
-});
-```
+1. Register your custom URL scheme in your app
+2. Load the OAuth flow in a WebView
+3. Handle the callback URL with authentication data
+
+See the **[Mobile OAuth Guide](docs/MOBILE_OAUTH.md)** for a complete implementation guide including iOS/Swift and Android/Kotlin examples.
 
 ### Protected Routes with Session Helpers
 
-The package provides convenient helpers for authenticating routes:
+The package provides convenient helpers for authenticating routes. These helpers are provided by the underlying `@tijs/hono-oauth-sessions` package.
 
 ```typescript
 import { Hono } from "@hono/hono";
@@ -273,68 +245,19 @@ app.get("/api/bookmarks", async (c) => {
 });
 ```
 
-**Available Helper Methods:**
-
-- `oauth.sessions.getOAuthSessionFromRequest(req)` - Extract session from cookie
-  and validate (with automatic token refresh)
-- `oauth.sessions.getClearCookieHeader()` - Get Set-Cookie header to clear the
-  session cookie
-
-These helpers are provided by the underlying `@tijs/hono-oauth-sessions` package
-and handle all the complexity of:
-
-- Extracting and unsealing iron-session cookies
-- Extracting the DID from session data
-- Restoring OAuth sessions with automatic token refresh
-- Generating proper cookie clearing headers
-
-## Mobile App Integration
-
-For mobile apps using WebView:
-
-1. Register your custom URL scheme in your app
-2. Load the OAuth flow in a WebView
-3. Handle the callback URL with authentication data
-
-```swift
-// iOS example - register URL scheme in Info.plist
-// Then handle the callback:
-func handleAuthCallback(url: URL) {
-  // Parse tokens from URL parameters
-  let accessToken = url.getQueryParam("access_token")
-  let did = url.getQueryParam("did")
-  // Store securely and close WebView
-}
-```
-
 ## Documentation
 
 ### Package Documentation
 
 - **[Mobile OAuth Guide](docs/MOBILE_OAUTH.md)** - Complete mobile OAuth
   implementation guide
-  - OAuth flow explanation
-  - API endpoint reference
-  - Security best practices
-  - iOS/Android integration examples
-  - Error handling strategies
-
 - **[JSR Documentation](https://jsr.io/@tijs/atproto-oauth-hono)** - Complete
   API reference with examples
-- **IntelliSense Support** - Full type information and examples in your editor
 
 ### Real-World Examples
 
 - **[Anchor AppView](https://github.com/dropanchorapp/anchor-appview)** -
   Production implementation with mobile OAuth
-
-The documentation includes:
-
-- Complete Val.Town integration examples
-- Multiple storage configuration patterns
-- Frontend authentication with cookie-based sessions
-- Troubleshooting guidance for common issues
-- TypeScript type definitions with validation notes
 
 ## Built on
 
