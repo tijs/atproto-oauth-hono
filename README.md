@@ -309,12 +309,24 @@ func handleAuthCallback(url: URL) {
 
 ## Documentation
 
-This package includes comprehensive documentation in JSDoc format:
+### Package Documentation
+
+- **[Mobile OAuth Guide](docs/MOBILE_OAUTH.md)** - Complete mobile OAuth
+  implementation guide
+  - OAuth flow explanation
+  - API endpoint reference
+  - Security best practices
+  - iOS/Android integration examples
+  - Error handling strategies
 
 - **[JSR Documentation](https://jsr.io/@tijs/atproto-oauth-hono)** - Complete
   API reference with examples
 - **IntelliSense Support** - Full type information and examples in your editor
-- **Module Documentation** - Detailed setup guides and usage patterns
+
+### Real-World Examples
+
+- **[Anchor AppView](https://github.com/dropanchorapp/anchor-appview)** -
+  Production implementation with mobile OAuth
 
 The documentation includes:
 

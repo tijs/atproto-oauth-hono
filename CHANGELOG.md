@@ -6,6 +6,41 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0] - 2025-11-21
+
+### Added
+
+- **Mobile OAuth Documentation**: New comprehensive `docs/MOBILE_OAUTH.md` guide
+  for mobile app integration
+  - Complete OAuth flow explanation with sequence diagrams
+  - All API endpoints with request/response schemas
+  - Security best practices and error handling strategies
+  - iOS Swift and Android Kotlin integration examples
+  - Generic configuration examples (not app-specific)
+- **Real-World Example**: README now links to Anchor AppView as production
+  reference implementation
+- **Enhanced README**: New "Documentation" section with organized links to
+  mobile OAuth guide and JSR docs
+
+### Changed
+
+- **Documentation Architecture**: OAuth implementation details now live in
+  package documentation (single source of truth)
+  - Genericized all examples (removed app-specific URLs and schemes)
+  - Applications can now reference package docs instead of duplicating OAuth
+    documentation
+  - Better separation of concerns: package docs for OAuth, app docs for
+    app-specific integration
+
+### Improved
+
+- **Developer Experience**: Applications implementing mobile OAuth now have
+  complete reference documentation in the package
+- **Maintainability**: Single source of truth for OAuth implementation reduces
+  documentation drift
+- **Reusability**: Generic examples make documentation applicable to any ATProto
+  application
+
 ## [2.2.1] - 2025-11-16
 
 ### Changed
