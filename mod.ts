@@ -95,3 +95,6 @@ export type { OAuthStorage } from "./src/storage/interface.ts";
 
 // Optional Hono middleware for authentication
 export { createAuthMiddleware } from "./src/middleware.ts";
+
+// Re-export types from hono-oauth-sessions for cookie refresh support
+export type { OAuthSessionFromRequestResult } from "@tijs/hono-oauth-sessions";

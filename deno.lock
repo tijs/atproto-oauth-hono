@@ -6,7 +6,7 @@
     "jsr:@std/assert@1": "1.0.15",
     "jsr:@std/internal@^1.0.10": "1.0.10",
     "jsr:@std/internal@^1.0.12": "1.0.12",
-    "jsr:@tijs/hono-oauth-sessions@2.1.3": "2.1.3",
+    "jsr:@tijs/hono-oauth-sessions@2.2.0": "2.2.0",
     "jsr:@tijs/oauth-client-deno@4.0.1": "4.0.1",
     "npm:@atproto/syntax@0.4.0": "0.4.0",
     "npm:@atproto/syntax@0.4.1": "0.4.1",
@@ -37,8 +37,8 @@
     "@std/internal@1.0.12": {
       "integrity": "972a634fd5bc34b242024402972cd5143eac68d8dffaca5eaa4dba30ce17b027"
     },
-    "@tijs/hono-oauth-sessions@2.1.3": {
-      "integrity": "7939a45f4d680122ca25369d659cd87005d2983aa6d9756584ac6bc1c53ed0e8",
+    "@tijs/hono-oauth-sessions@2.2.0": {
+      "integrity": "e3c3b75f79148a680810d06a21b21fadf470b75e9ad187ac3226de954713cad9",
       "dependencies": [
         "jsr:@hono/hono",
         "npm:@atproto/syntax@0.4.1",
@@ -116,7 +116,7 @@
     "dependencies": [
       "jsr:@hono/hono@4.9.6",
       "jsr:@std/assert@1",
-      "jsr:@tijs/hono-oauth-sessions@2.1.3",
+      "jsr:@tijs/hono-oauth-sessions@2.2.0",
       "jsr:@tijs/oauth-client-deno@4.0.1"
     ]
   }

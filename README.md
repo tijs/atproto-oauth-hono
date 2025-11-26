@@ -143,11 +143,15 @@ the main package lightweight.
 ### Custom Storage
 
 You can implement your own storage by following the `OAuthStorage` interface.
-See the [@tijs/oauth-client-deno documentation](https://jsr.io/@tijs/oauth-client-deno) for the interface definition and examples.
+See the
+[@tijs/oauth-client-deno documentation](https://jsr.io/@tijs/oauth-client-deno)
+for the interface definition and examples.
 
 ## Session Configuration
 
-Configure session duration for different use cases. For detailed session security and configuration options, see the [@tijs/hono-oauth-sessions documentation](https://jsr.io/@tijs/hono-oauth-sessions).
+Configure session duration for different use cases. For detailed session
+security and configuration options, see the
+[@tijs/hono-oauth-sessions documentation](https://jsr.io/@tijs/hono-oauth-sessions).
 
 ```typescript
 // Standard sessions (default: 7 days)
@@ -203,11 +207,13 @@ For mobile apps using WebView:
 2. Load the OAuth flow in a WebView
 3. Handle the callback URL with authentication data
 
-See the **[Mobile OAuth Guide](docs/MOBILE_OAUTH.md)** for a complete implementation guide including iOS/Swift and Android/Kotlin examples.
+See the **[Mobile OAuth Guide](docs/MOBILE_OAUTH.md)** for a complete
+implementation guide including iOS/Swift and Android/Kotlin examples.
 
 ### Protected Routes with Session Helpers
 
-The package provides convenient helpers for authenticating routes. These helpers are provided by the underlying `@tijs/hono-oauth-sessions` package.
+The package provides convenient helpers for authenticating routes. These helpers
+are provided by the underlying `@tijs/hono-oauth-sessions` package.
 
 ```typescript
 import { Hono } from "@hono/hono";
