@@ -1,5 +1,8 @@
 # @tijs/atproto-oauth-hono
 
+> **⚠️ Use [`@tijs/atproto-oauth`](https://jsr.io/@tijs/atproto-oauth) instead.**
+> This package is no longer maintained.
+
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/tijsteulings)
 
 Complete ATProto OAuth integration for Hono applications. Get plug-and-play
